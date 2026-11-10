@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="no-referrer">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self'; connect-src 'self' https://deeegczehhbiofqhhizl.supabase.co; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'self'; upgrade-insecure-requests">
+    <meta name="description" content="Sign in securely to NovaX Creator Hub.">
+    <link rel="canonical" href="https://creators.novaxstudios.art/signin/">
+    <link rel="stylesheet" href="/assets/styles.css">
+    <title>Sign in | NovaX Creator Hub</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="/">NovaX <span>Creator Hub</span></a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms</a>
+        <a href="https://novaxstudios.art/">NovaX Studios</a>
+        <a class="nav-signin" href="/signin/" aria-current="page">Sign in</a>
+      </nav>
+    </header>
+
+    <main class="auth-main" id="main-content">
+      <section class="auth-shell" aria-labelledby="signin-title">
+        <header class="auth-heading">
+          <span class="development-tag">Secure account access</span>
+          <h1 id="signin-title">Sign in</h1>
+          <p>Access your NovaX Creator Hub account.</p>
+        </header>
+
+        <div class="auth-card">
+          <form class="auth-form" data-auth-form="signin" method="post" action="/signin/" autocomplete="on">
+            <div class="form-field">
+              <label for="signin-email">Email</label>
+              <input id="signin-email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="254" required>
+            </div>
+
+            <div class="form-field">
+              <label for="signin-password">Password</label>
+              <input id="signin-password" name="password" type="password" autocomplete="current-password" minlength="8" maxlength="128" required>
+            </div>
+
+            <button class="auth-submit" type="submit" disabled>Sign in</button>
+          </form>
+
+          <div data-oauth-group>
+            <div class="auth-divider"><span>or</span></div>
+            <button class="oauth-button" type="button" data-google-signin disabled>Continue with Google</button>
+          </div>
+
+          <p class="auth-status" data-auth-status role="status" aria-live="polite"></p>
+
+          <div class="auth-signed-in" data-signed-in hidden>
+            <p>You are signed in.</p>
+            <a class="button" href="/">Continue to Creator Hub</a>
+            <button class="auth-signout" type="button" data-signout disabled>Sign out of this tab</button>
+          </div>
+
+          <p class="auth-switch">Don't have an account? <a href="/signup/">Create one!</a></p>
+          <p class="auth-note">
+            Your password is sent directly to Supabase Auth over HTTPS and is never logged or stored by this page.
+            Session details are kept in this browser tab. Read the <a href="/privacy/">Privacy Policy</a>.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <div class="footer-company">
+          <strong>NovaX Creator Hub is operated by NovaX Studios Ltd.</strong>
+          <p>Registered in England and Wales, company number 17534097.</p>
+          <p>Registered office: 61 Bridge Street, Kington, HR5 3DJ, United Kingdom.</p>
+        </div>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="mailto:contact@novaxstudios.art">Contact</a>
+          <a href="/privacy/">Privacy Policy</a>
+          <a href="/terms/">Terms of Service</a>
+        </nav>
+      </div>
+      <p class="footer-note">© 2026 NovaX Studios Ltd. Creator Hub is under development.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0" defer></script>
+    <script src="/assets/supabase-client.js" defer></script>
+    <script src="/assets/auth.js" defer></script>
+  </body>
+</html>

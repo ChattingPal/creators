@@ -17,6 +17,7 @@
         <a href="/privacy/" aria-current="page">Privacy</a>
         <a href="/terms/">Terms</a>
         <a href="https://novaxstudios.art/">NovaX Studios</a>
+        <a class="nav-signin" href="/signin/">Sign in</a>
       </nav>
     </header>
 
@@ -65,12 +66,12 @@
           <div class="legal-status">
             <strong>Important platform status</strong>
             <p>
-              Supabase authentication, Google OAuth and session handling have been configured and
-              successfully tested. Supabase also provides the configured backend services. The public
-              GitHub Pages frontend remains in development and does not yet provide a public signup
-              page. Creator profiles, subscriptions, payments, uploads, forums, verification, analytics
-              and advertising are not confirmed as operational. References to those functions describe
-              planned processing unless this policy expressly states otherwise.
+              Public sign-in and signup pages now provide email and password authentication through
+              Supabase Auth, together with Google OAuth. Supabase authentication, backend services and
+              session handling are operational. Creator profiles, subscriptions, payments, uploads,
+              forums, verification, analytics and advertising are not confirmed as operational.
+              References to those functions describe planned processing unless this policy expressly
+              states otherwise.
             </p>
           </div>
 
@@ -89,7 +90,7 @@
               <div class="info-card">
                 <span class="active-label">Operational</span>
                 <strong>Authentication and backend services</strong>
-                <p>Supabase authentication and backend services, Google OAuth and session handling have been configured and tested. Public self-service signup is not yet available.</p>
+                <p>Supabase authentication and backend services, Google OAuth and session handling are operational. Public sign-up and sign-in pages are available.</p>
               </div>
               <div class="info-card">
                 <span class="active-label">Active now</span>
@@ -131,7 +132,7 @@
             <ul>
               <li>IP address and request details processed by GitHub Pages for hosting and security.</li>
               <li>IP address, browser type, browser version, referring domain, requested CDN URL, request time, device identifiers and diagnostic data processed when jsDelivr delivers the Supabase JavaScript library.</li>
-              <li>For authorised authentication users, a Supabase user ID, Google provider identifier, email address, authentication events, session records and related security information.</li>
+              <li>For registered or signed-in users, a username where supplied, Supabase user ID, Google provider identifier, email address, authentication events, session records and related security information.</li>
               <li>Name and profile image may be received from Google where present in the ordinary sign-in response.</li>
               <li>Information included in emails or other correspondence sent to NovaX.</li>
             </ul>
@@ -139,7 +140,7 @@
             <div class="info-grid">
               <div class="info-card">
                 <strong>Operational authentication information</strong>
-                <p>Email address, internal Supabase user ID, Google provider identifier, authentication events, session and security information for authorised users. Public self-service signup is not yet available.</p>
+                <p>Username where supplied, email address, internal Supabase user ID, Google provider identifier, authentication events, session and security information for registered or signed-in users.</p>
               </div>
               <div class="info-card">
                 <strong>Planned public profile information</strong>
@@ -151,7 +152,7 @@
               </div>
               <div class="info-card">
                 <strong>Information that may be required</strong>
-                <p>Email address and account identifier are used for the tested authentication service. A unique username or handle may be required if public account features launch. Any other required field will be identified when collected.</p>
+                <p>Username, email address and account identifier are used for the operational authentication service. Additional profile or handle information may be required if public creator features launch. Any other required field will be identified when collected.</p>
               </div>
             </div>
             <p>Additional categories may include:</p>
@@ -178,8 +179,8 @@
             <ul>
               <li>directly from a person who emails or otherwise contacts NovaX;</li>
               <li>automatically through ordinary hosting and CDN network requests;</li>
-              <li>through the configured Google OAuth and Supabase authentication process when an authorised user signs in;</li>
-              <li>in the future, through public account registration, profile editing, image uploads, posts, comments, support requests and account settings;</li>
+              <li>through the public signup and sign-in pages, including email and password authentication and the configured Google OAuth process;</li>
+              <li>in the future, through profile editing, image uploads, posts, comments, support requests and account settings;</li>
               <li>in the future, from a payment provider, limited to transaction, billing and subscription information required to administer a purchase;</li>
               <li>in the future, from verification providers or public creator accounts when identity or account ownership must be checked; and</li>
               <li>through browser storage or similar technology used for essential authentication and security, and through optional analytics only if introduced with the required choice and notice.</li>
@@ -219,9 +220,9 @@
                   </tr>
                   <tr>
                     <td>Authenticate authorised users and manage sessions</td>
-                    <td>Email, provider and user identifiers, authentication events, session and security data</td>
-                    <td>Legitimate interests in testing and securing the service, and contract or pre-contract steps where applicable</td>
-                    <td>Operational in controlled testing; public signup not released</td>
+                    <td>Username where supplied, email, provider and user identifiers, authentication events, session and security data</td>
+                    <td>Contract and pre-contract steps, together with legitimate interests in securing and administering the service where applicable</td>
+                    <td>Operational</td>
                   </tr>
                   <tr>
                     <td>Display creator profiles and public content</td>
@@ -282,7 +283,7 @@
                   </tr>
                   <tr>
                     <td>Account owners</td>
-                    <td>Their permitted profile fields, settings and content</td>
+                    <td>Their authentication account details and session, together with any future profile fields, settings and content made available to them</td>
                     <td>No ability to grant themselves verification, paid privileges or access to another user's private records</td>
                   </tr>
                   <tr>
@@ -329,19 +330,19 @@
               <div class="provider-card">
                 <span class="active-label">Operational</span>
                 <strong>Supabase</strong>
-                <p>Provides the configured authentication and backend services, including user and session handling. Public signup is not yet available. See the <a href="https://supabase.com/privacy">Supabase Privacy Policy</a>.</p>
+                <p>Provides authentication and backend services for public account creation, sign in, user records and session handling. See the <a href="https://supabase.com/privacy">Supabase Privacy Policy</a>.</p>
               </div>
               <div class="provider-card">
                 <span class="active-label">Operational for authentication</span>
                 <strong>Google</strong>
-                <p>Provides the configured OAuth sign-in method. It has been successfully tested and does not request sensitive Google scopes. The public frontend does not yet provide a signup page. See the <a href="https://policies.google.com/privacy">Google Privacy Policy</a>.</p>
+                <p>Provides the OAuth method available from the public sign-in page. It does not request sensitive Google scopes. See the <a href="https://policies.google.com/privacy">Google Privacy Policy</a>.</p>
               </div>
             </div>
             <h3>Supabase processing</h3>
             <p>
-              Supabase currently processes account identifiers, email addresses, authentication events,
-              provider identity information, session data and related security records for the configured
-              authentication service. If later features launch, Supabase may also process profile records,
+              Supabase currently processes usernames where supplied, account identifiers, email addresses,
+              authentication events, provider identity information, session data and related security records
+              for the operational authentication service. If later features launch, Supabase may also process profile records,
               posts, comments, subscription status, moderation data, verification records and uploaded files
               according to the functions actually enabled. NovaX acts as controller for Creator Hub purposes,
               while Supabase generally processes platform data as a service provider under its applicable
@@ -364,10 +365,9 @@
             <h2>Google sign in</h2>
             <span class="active-label">Configured and successfully tested</span>
             <p>
-              Google OAuth is operational for authentication testing, although the public site does not yet
-              provide a signup page. Google may provide a stable account identifier, email address, email
-              verification status, name and profile picture through the ordinary sign-in scopes shown on the
-              consent screen. NovaX uses that information to create or link an authentication account and
+              Google OAuth is available from the public sign-in page. Google may provide a stable account
+              identifier, email address, email verification status, name and profile picture through the
+              ordinary sign-in scopes shown on the consent screen. NovaX uses that information to create or link an authentication account and
               authenticate the user. No sensitive Google scopes are requested.
             </p>
             <p>
@@ -451,17 +451,18 @@
             <span class="section-number">12</span>
             <h2>Cookies, browser storage and analytics</h2>
             <p>
-              The reviewed static site does not include a first-party analytics or advertising tool. It loads
-              a Supabase browser client from jsDelivr, but no public sign-in or signup control is present.
-              Ordinary network requests still disclose technical information to the hosting and CDN providers.
+              The reviewed static site does not include a first-party analytics or advertising tool. The public
+              sign-in and signup pages load the Supabase browser client from jsDelivr. Ordinary network requests
+              still disclose technical information to the hosting and CDN providers.
             </p>
             <p>
-              Supabase authentication and session handling have been configured and successfully tested.
-              Supabase may use browser storage or cookies to keep an authorised user signed in, refresh
-              authentication sessions and protect the account. Those technologies are treated as essential where
-              strictly necessary for authentication and security. The repository also contains a Next.js session
-              refresh proxy, but GitHub Pages does not execute that server code. It must not be treated as an
-              active control for the current static frontend.
+              The public authentication pages use browser session storage for Supabase session credentials
+              where that storage is available. This is intended to keep the session within the current browser
+              tab rather than persistent local storage. The entered password is not written to browser storage,
+              logged by the page or placed in the page URL. Supabase receives the password directly over HTTPS
+              and manages the authentication record. The repository also contains a Next.js session refresh
+              proxy, but GitHub Pages does not execute that server code. It must not be treated as an active
+              control for the current static frontend.
             </p>
             <p>
               NovaX will not introduce non-essential analytics, advertising or marketing storage without updating
@@ -475,15 +476,17 @@
             <h2>Children and younger creators</h2>
             <span class="planned-label">Account safeguards must be completed before launch</span>
             <p>
-              The planned account service is intended for creators aged 16 or over. A creator aged 16 or 17 may
-              require a parent or legal guardian to participate in verification, permissions and contracting.
-              The exact process is not yet implemented.
+              Basic authentication accounts are intended for users aged 16 or over. Creating an authentication
+              account does not mean that a person has been accepted for creator services. A creator aged 16 or 17
+              may require a parent or legal guardian to participate in verification, permissions and contracting
+              before any creator, financial or legal service is enabled. That process is not yet implemented.
             </p>
             <p>
               Guardian involvement does not by itself resolve every data protection, contract or online safety
-              requirement. Before allowing younger creators to register, NovaX must complete appropriate risk and
-              impact assessments, decide how age and guardian authority will be established, apply high privacy
-              settings by default, minimise collection and provide clear information suitable for younger users.
+              requirement. Before enabling creator services for younger users, NovaX must complete appropriate
+              risk and impact assessments, decide how age and guardian authority will be established, apply high
+              privacy settings by default, minimise collection and provide clear information suitable for younger
+              users.
             </p>
             <p>
               Where processing relies on consent for an online service offered directly to a child, the applicable
