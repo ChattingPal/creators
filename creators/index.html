@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self'; connect-src 'self' https://deeegczehhbiofqhhizl.supabase.co; img-src 'self' data: https://deeegczehhbiofqhhizl.supabase.co; object-src 'none'; base-uri 'none'; form-action 'self'; upgrade-insecure-requests">
+    <meta name="description" content="Search public creators on NovaX Creator Hub by handle.">
+    <link rel="canonical" href="https://creators.novaxstudios.art/creators/">
+    <link rel="stylesheet" href="/assets/styles.css?v=20261110-directory1">
+    <title>Search Creators | NovaX Creator Hub</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="/">NovaX <span>Creator Hub</span></a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <a href="/creators/" aria-current="page">Creators</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms</a>
+        <a href="https://novaxstudios.art/">NovaX Studios</a>
+        <a class="nav-signin" href="/signin/" data-session-link>Sign in</a>
+      </nav>
+    </header>
+
+    <main class="creator-directory-main" id="main-content">
+      <section class="creator-directory-hero" aria-labelledby="creator-directory-title">
+        <p class="eyebrow">NovaX Creator Hub directory</p>
+        <h1 id="creator-directory-title">Search Creators</h1>
+        <p>Browse public creator profiles. Verified creators are shown first.</p>
+
+        <form class="creator-search-form" data-creator-search-form role="search" action="/creators/" method="get">
+          <label for="creator-search">Search by handle</label>
+          <div class="creator-search-control">
+            <span aria-hidden="true">@</span>
+            <input id="creator-search" name="handle" type="search" maxlength="30" autocomplete="off" placeholder="creator_handle" data-creator-search-input>
+            <button type="submit">Search</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="creator-directory-results" aria-labelledby="creator-results-title">
+        <header>
+          <div>
+            <p class="eyebrow">Public profiles</p>
+            <h2 id="creator-results-title">Creators</h2>
+          </div>
+          <span class="creator-result-count" data-creator-result-count aria-live="polite"></span>
+        </header>
+
+        <p class="creator-directory-status" data-creator-directory-status role="status" aria-live="polite">Loading creators...</p>
+        <div class="creator-directory-grid" data-creator-directory-grid></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <div class="footer-company">
+          <strong>NovaX Creator Hub is operated by NovaX Studios Ltd.</strong>
+          <p>Registered in England and Wales, company number 17534097.</p>
+          <p>Registered office: 61 Bridge Street, Kington, HR5 3DJ, United Kingdom.</p>
+        </div>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="mailto:contact@novaxstudios.art">Contact</a>
+          <a href="/privacy/">Privacy Policy</a>
+          <a href="/terms/">Terms of Service</a>
+        </nav>
+      </div>
+      <p class="footer-note">© 2026 NovaX Studios Ltd. Creator Hub is under development.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0" defer></script>
+    <script src="/assets/supabase-client.js?v=20261110-auth1" defer></script>
+    <script src="/assets/nav-session.js?v=20261110-auth1" defer></script>
+    <script src="/assets/creator-directory.js?v=20261110-directory1" defer></script>
+  </body>
+</html>

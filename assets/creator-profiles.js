@@ -28,8 +28,8 @@
     return "Your creator profile could not be created. Please try again.";
   }
 
-  function profileUrl(profileId) {
-    return "/profile/?profile=" + encodeURIComponent(profileId);
+  function profileUrl(handle) {
+    return "/profile/" + encodeURIComponent(handle);
   }
 
   window.addEventListener("DOMContentLoaded", async () => {
@@ -295,7 +295,7 @@
           className: "profile-table-link",
           text: `@${profile.handle}`
         });
-        handleLink.href = profileUrl(profile.id);
+        handleLink.href = profileUrl(profile.handle);
         handleCell.append(handleLink);
 
         const statusCell = createElement("td");
@@ -313,7 +313,7 @@
         });
         const actionCell = createElement("td");
         const viewLink = createElement("a", { className: "profile-table-action", text: "View" });
-        viewLink.href = profileUrl(profile.id);
+        viewLink.href = profileUrl(profile.handle);
         actionCell.append(viewLink);
 
         row.append(handleCell, statusCell, createdCell, actionCell);
@@ -552,7 +552,7 @@
 
         clearDraft();
         setMessage(submitStatus, "Your profile is ready. Opening it now...", "success");
-        window.location.assign(profileUrl(profile.id));
+        window.location.assign(profileUrl(profile.handle));
       } catch (error) {
         if (avatarPath) {
           await client.storage.from(BUCKET_NAME).remove([avatarPath]);

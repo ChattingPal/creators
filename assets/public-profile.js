@@ -1,6 +1,25 @@
 (() => {
   const BUCKET_NAME = "creator-avatars";
 
+  function profileKeyFromLocation() {
+    const url = new URL(window.location.href);
+    const queryProfile = url.searchParams.get("profile");
+    if (queryProfile) return queryProfile;
+
+    const pathMatch = url.pathname.match(/^\/profile\/([^/]+)\/?$/);
+    if (!pathMatch) return "";
+
+    try {
+      return decodeURIComponent(pathMatch[1]);
+    } catch {
+      return "";
+    }
+  }
+
+  function publicProfilePath(handle) {
+    return "/profile/" + encodeURIComponent(handle);
+  }
+
   window.addEventListener("DOMContentLoaded", async () => {
     const client = window.novaxSupabase;
     const loading = document.querySelector("[data-public-profile-loading]");
@@ -13,7 +32,7 @@
     const verifiedBadge = document.querySelector("[data-public-verified-badge]");
     const avatarImage = document.querySelector("[data-public-avatar-image]");
     const avatarPlaceholder = document.querySelector("[data-public-avatar-placeholder]");
-    const profileKey = new URL(window.location.href).searchParams.get("profile");
+    const profileKey = profileKeyFromLocation();
 
     function showError(message) {
       if (loading) loading.hidden = true;
@@ -70,6 +89,12 @@
     }
 
     document.title = `@${handle} | NovaX Creator Hub`;
+    const cleanPath = publicProfilePath(handle);
+    if (window.location.pathname !== cleanPath || window.location.search) {
+      window.history.replaceState({}, document.title, cleanPath);
+    }
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.href = new URL(cleanPath, window.location.origin).href;
     if (loading) loading.hidden = true;
     if (profileShell) profileShell.hidden = false;
   });
