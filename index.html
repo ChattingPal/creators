@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="NovaX Creator Hub — a home for independent creators.">
+  <title>NovaX Creator Hub</title>
+  <style>
+    :root{color-scheme:dark;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#0b1020;color:#eef2ff}
+    *{box-sizing:border-box}body{margin:0}header{border-bottom:1px solid #29324d;padding:18px max(24px,calc((100vw - 1080px)/2));display:flex;align-items:center;justify-content:space-between;gap:16px}
+    a{color:inherit}header a{text-decoration:none;font-weight:750;letter-spacing:.03em}.tag{font-size:.8rem;color:#a5b4fc;border:1px solid #4f46e5;border-radius:99px;padding:7px 12px}
+    main{max-width:1080px;margin:auto;padding:100px 24px 80px}h1{font-size:clamp(2.7rem,7vw,5.5rem);line-height:1.04;letter-spacing:-.055em;margin:18px 0}p{max-width:610px;color:#bac4da;font-size:1.15rem;line-height:1.7}
+    .eyebrow{color:#a5b4fc;text-transform:uppercase;font-weight:700;letter-spacing:.14em;font-size:.8rem}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+    .button{display:inline-block;text-decoration:none;border-radius:12px;padding:13px 20px;font-weight:700;background:#6366f1;color:white}.button.secondary{background:#202943;color:#e5e7eb}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:80px}.card{border:1px solid #29324d;background:#141b2e;border-radius:18px;padding:24px}.card h2{font-size:1.12rem;margin:0 0 10px}.card p{font-size:.95rem;margin:0}
+    footer{border-top:1px solid #29324d;color:#93a1ba;padding:24px;text-align:center;font-size:.85rem}
+  </style>
+</head>
+<body>
+  <header><a href="/">NovaX <span style="color:#a5b4fc">Creator Hub</span></a><span class="tag">In development</span></header>
+  <main>
+    <div class="eyebrow">Made for independent creators</div>
+    <h1>Your creativity.<br>Your corner of the internet.</h1>
+    <p>Creator profiles, updates, communities, and merchandise — coming together in one place. We're building the hub for the next generation of creators.</p>
+    <div class="actions"><a class="button" href="https://novaxstudios.art/">Visit NovaX Studios</a><a class="button secondary" href="mailto:contact@novaxstudios.art">Contact us</a></div>
+    <section class="grid" aria-label="Planned features">
+      <div class="card"><h2>Creator profiles</h2><p>Showcase your work, links, profile picture and banner.</p></div>
+      <div class="card"><h2>News and updates</h2><p>Keep your audience up to date in your own space.</p></div>
+      <div class="card"><h2>Merchandise</h2><p>Share products and link fans to your official shop.</p></div>
+    </section>
+  </main>
+  <footer>© NovaX Studios Ltd. · Creator Hub is under development.</footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="/assets/supabase-client.js" defer></script>
+</body>
+</html>
