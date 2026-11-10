@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self'; connect-src 'self' https://deeegczehhbiofqhhizl.supabase.co; img-src 'self' data: https://deeegczehhbiofqhhizl.supabase.co; object-src 'none'; base-uri 'none'; form-action 'self'; upgrade-insecure-requests">
+    <meta name="description" content="A creator profile on NovaX Creator Hub.">
+    <link rel="canonical" href="https://creators.novaxstudios.art/profile/">
+    <link rel="stylesheet" href="/assets/styles.css">
+    <title>Creator Profile | NovaX Creator Hub</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="/">NovaX <span>Creator Hub</span></a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms</a>
+        <a href="https://novaxstudios.art/">NovaX Studios</a>
+        <a class="nav-signin" href="/signin/" data-session-link>Sign in</a>
+      </nav>
+    </header>
+
+    <main class="public-profile-main" id="main-content">
+      <p class="public-profile-loading" data-public-profile-loading role="status">Loading creator profile...</p>
+
+      <article class="public-profile-shell" data-public-profile hidden>
+        <header class="public-profile-header">
+          <div class="public-profile-avatar" data-public-avatar>
+            <span data-public-avatar-placeholder aria-hidden="true">NX</span>
+            <img data-public-avatar-image alt="" hidden>
+          </div>
+          <div>
+            <p class="eyebrow">NovaX Creator Hub</p>
+            <h1 data-public-handle></h1>
+            <span class="public-profile-status" data-public-status>Beta creator</span>
+          </div>
+        </header>
+
+        <section class="public-profile-about" aria-labelledby="about-title">
+          <h2 id="about-title">About Me</h2>
+          <p data-public-description></p>
+        </section>
+      </article>
+
+      <section class="public-profile-error" data-public-profile-error hidden aria-labelledby="profile-error-title">
+        <p class="eyebrow">Creator profile</p>
+        <h1 id="profile-error-title">Profile not found</h1>
+        <p data-public-profile-error-message>This creator profile may not exist or may no longer be public.</p>
+        <a class="button" href="/">Return to Creator Hub</a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <div class="footer-company">
+          <strong>NovaX Creator Hub is operated by NovaX Studios Ltd.</strong>
+          <p>Registered in England and Wales, company number 17534097.</p>
+          <p>Registered office: 61 Bridge Street, Kington, HR5 3DJ, United Kingdom.</p>
+        </div>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="mailto:contact@novaxstudios.art">Contact</a>
+          <a href="/privacy/">Privacy Policy</a>
+          <a href="/terms/">Terms of Service</a>
+        </nav>
+      </div>
+      <p class="footer-note">© 2026 NovaX Studios Ltd. Creator Hub is under development.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0" defer></script>
+    <script src="/assets/supabase-client.js?v=20261110-auth1" defer></script>
+    <script src="/assets/nav-session.js?v=20261110-auth1" defer></script>
+    <script src="/assets/public-profile.js?v=20261110-onboarding1" defer></script>
+  </body>
+</html>

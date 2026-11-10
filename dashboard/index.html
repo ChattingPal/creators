@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="referrer" content="no-referrer">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self'; connect-src 'self' https://deeegczehhbiofqhhizl.supabase.co; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'self'; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self'; connect-src 'self' https://deeegczehhbiofqhhizl.supabase.co; img-src 'self' data: blob: https://deeegczehhbiofqhhizl.supabase.co; object-src 'none'; base-uri 'none'; form-action 'self'; upgrade-insecure-requests">
     <meta name="description" content="Manage your NovaX Creator Hub pages.">
     <meta name="robots" content="noindex, nofollow">
     <link rel="canonical" href="https://creators.novaxstudios.art/dashboard/">
@@ -34,33 +34,34 @@
             <h1 id="dashboard-title">Welcome, <span data-account-name>Creator</span>!</h1>
             <p>View the pages connected to your Creator Hub account.</p>
           </div>
-          <button class="create-page-button" type="button" disabled>Create New Page - Under Development</button>
+          <button class="create-page-button" type="button" data-create-profile-open disabled>Create New Profile</button>
         </header>
 
         <div class="account-layout">
           <section class="account-panel" aria-labelledby="pages-title">
             <header class="account-panel-header">
-              <h2 id="pages-title">Pages</h2>
-              <p>Only pages belonging to your signed-in account will appear here.</p>
+              <h2 id="pages-title">Creator profiles</h2>
+              <p>Each creator profile belongs to your signed-in account and can be opened independently.</p>
             </header>
 
             <div class="pages-table-wrap">
               <table class="pages-table">
                 <thead>
                   <tr>
-                    <th>Page name</th>
-                    <th>Owner</th>
+                    <th>Creator profile</th>
                     <th>Status</th>
-                    <th>Last updated</th>
+                    <th>Created</th>
+                    <th><span class="visually-hidden">Actions</span></th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody data-profile-table-body>
                   <tr>
-                    <td class="empty-row" colspan="4">No pages have been created yet. Page creation is under development.</td>
+                    <td class="empty-row" colspan="4">Loading your creator profiles...</td>
                   </tr>
                 </tbody>
               </table>
             </div>
+            <p class="profile-list-status" data-profile-list-status role="status" aria-live="polite"></p>
           </section>
 
           <aside class="account-sidebar" aria-label="Account navigation">
@@ -72,6 +73,143 @@
         </div>
       </section>
     </main>
+
+    <dialog class="creator-profile-dialog" data-profile-dialog aria-labelledby="creator-profile-title" aria-describedby="creator-profile-intro">
+      <div class="creator-profile-modal">
+        <header class="creator-profile-modal-header">
+          <div>
+            <p class="eyebrow">Creator profile setup</p>
+            <h2 id="creator-profile-title">Create Your Creator Profile</h2>
+          </div>
+          <button class="creator-profile-close" type="button" data-profile-close aria-label="Close creator profile setup">Close</button>
+        </header>
+
+        <p class="creator-profile-intro" id="creator-profile-intro">
+          Set up the public profile that viewers will see. Nothing is created until you continue as a beta tester.
+        </p>
+
+        <form class="creator-profile-form" data-profile-form action="/dashboard/" method="post">
+          <section class="creator-profile-step" data-profile-details-step aria-labelledby="profile-details-title">
+            <div class="creator-profile-step-heading">
+              <span>Step 1 of 2</span>
+              <h3 id="profile-details-title">Profile details</h3>
+            </div>
+
+            <div class="profile-form-field">
+              <label for="creator-handle">1. Username <span aria-hidden="true">*</span></label>
+              <input id="creator-handle" name="handle" type="text" required minlength="3" maxlength="30" pattern="[A-Za-z0-9_]+" autocomplete="off" aria-describedby="creator-handle-help creator-handle-error">
+              <p id="creator-handle-help">Your public username. Use 3 to 30 letters, numbers or underscores.</p>
+              <p class="profile-field-error" id="creator-handle-error" data-handle-error aria-live="polite"></p>
+            </div>
+
+            <div class="profile-form-field">
+              <div class="profile-field-label-row">
+                <label for="creator-description">2. Description</label>
+                <span data-description-count aria-live="polite">0 / 500</span>
+              </div>
+              <textarea id="creator-description" name="description" rows="6" maxlength="500" aria-describedby="creator-description-help"></textarea>
+              <p id="creator-description-help">Tell visitors about your work. This field is optional.</p>
+            </div>
+
+            <fieldset class="profile-picture-field">
+              <legend>3. Profile Picture</legend>
+              <div class="profile-picture-picker">
+                <div class="profile-picture-preview" data-avatar-preview aria-label="Profile picture preview">
+                  <span data-avatar-placeholder aria-hidden="true">NX</span>
+                  <img data-avatar-image alt="Selected profile picture preview" hidden>
+                </div>
+                <div class="profile-picture-controls">
+                  <label class="profile-file-button" for="creator-avatar">Choose image</label>
+                  <input id="creator-avatar" name="avatar" type="file" accept="image/jpeg,image/png,image/webp">
+                  <button type="button" data-avatar-remove hidden>Remove image</button>
+                  <p>JPEG, PNG or WebP. Maximum 5 MB.</p>
+                </div>
+              </div>
+              <p class="profile-field-error" data-avatar-error aria-live="polite"></p>
+            </fieldset>
+
+            <label class="profile-terms-check">
+              <input name="terms" type="checkbox" required>
+              <span>I have read and agree to the <a href="/terms/">Terms and Conditions</a>.</span>
+            </label>
+
+            <p class="profile-modal-status" data-profile-form-status role="status" aria-live="polite"></p>
+
+            <div class="creator-profile-actions">
+              <button class="profile-secondary-button" type="button" data-profile-cancel>Cancel</button>
+              <button class="profile-primary-button" type="button" data-profile-continue disabled>Continue</button>
+            </div>
+          </section>
+
+          <section class="creator-profile-step" data-profile-plans-step aria-labelledby="profile-plans-title" hidden>
+            <div class="creator-profile-step-heading">
+              <span>Step 2 of 2</span>
+              <h3 id="profile-plans-title">Choose how to continue</h3>
+              <p>Paid subscriptions are planned prices only. Payments and paid features are not currently available.</p>
+            </div>
+
+            <div class="billing-toggle" role="group" aria-label="Billing period">
+              <button type="button" data-billing-period="monthly" aria-pressed="true">Monthly</button>
+              <button type="button" data-billing-period="yearly" aria-pressed="false">Yearly</button>
+            </div>
+            <p class="billing-summary" data-billing-summary>Showing planned monthly prices.</p>
+
+            <div class="creator-plan-grid">
+              <article class="creator-plan-card">
+                <div class="creator-plan-card-heading">
+                  <div>
+                    <span class="coming-soon-label">Coming Soon</span>
+                    <h4>Creator Basic</h4>
+                  </div>
+                  <span class="plan-saving" data-basic-saving hidden>20% off</span>
+                </div>
+                <p class="creator-plan-price"><strong data-basic-price>£4.99</strong><span data-basic-period>/month</span></p>
+                <ul>
+                  <li>News Feed</li>
+                  <li>Community Forum</li>
+                  <li>Merchandise Page</li>
+                </ul>
+                <button type="button" disabled>Not available yet</button>
+              </article>
+
+              <article class="creator-plan-card creator-plan-card-premium">
+                <div class="creator-plan-card-heading">
+                  <div>
+                    <span class="coming-soon-label">Coming Soon</span>
+                    <h4>Creator Premium</h4>
+                  </div>
+                  <span class="plan-saving" data-premium-saving hidden>12% off</span>
+                </div>
+                <p class="creator-plan-price"><strong data-premium-price>£9.99</strong><span data-premium-period>/month</span></p>
+                <ul>
+                  <li>News Feed</li>
+                  <li>Community Forum</li>
+                  <li>Merchandise Page</li>
+                  <li>Extra Page Customisation</li>
+                  <li>Priority Support</li>
+                </ul>
+                <button type="button" disabled>Not available yet</button>
+              </article>
+            </div>
+
+            <div class="beta-access-panel">
+              <div>
+                <span class="active-label">Available now</span>
+                <h4>Creator Hub beta access</h4>
+                <p>Create your profile without a paid subscription while the platform is in development.</p>
+              </div>
+              <button class="beta-continue-button" type="button" data-beta-continue>Continue as Beta Tester</button>
+            </div>
+
+            <p class="profile-modal-status" data-profile-submit-status role="status" aria-live="polite"></p>
+
+            <div class="creator-profile-actions creator-profile-actions-back">
+              <button class="profile-secondary-button" type="button" data-profile-back>Back</button>
+            </div>
+          </section>
+        </form>
+      </div>
+    </dialog>
 
     <footer class="site-footer">
       <div class="footer-grid">
@@ -91,6 +229,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0" defer></script>
     <script src="/assets/supabase-client.js?v=20261110-auth1" defer></script>
-    <script src="/assets/account-area.js?v=20261110-auth1" defer></script>
+    <script src="/assets/account-area.js?v=20261110-profile1" defer></script>
+    <script src="/assets/creator-profiles.js?v=20261110-onboarding1" defer></script>
   </body>
 </html>
