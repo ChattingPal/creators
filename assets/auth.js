@@ -62,6 +62,27 @@
       : "Sign in was not completed. Please try again.";
   }
 
+  function accountDestination() {
+    const requested = new URL(window.location.href).searchParams.get("next");
+    if (requested === "/dashboard/" || requested === "/account/") {
+      return requested;
+    }
+    return "/dashboard/";
+  }
+
+  function redirectToAccountArea() {
+    window.location.replace(accountDestination());
+  }
+
+  function oauthReturnUrl() {
+    const url = new URL("/signin/", window.location.origin);
+    const destination = accountDestination();
+    if (destination !== "/dashboard/") {
+      url.searchParams.set("next", destination);
+    }
+    return url.href;
+  }
+
   window.addEventListener("DOMContentLoaded", () => {
     const client = window.novaxSupabase;
     const form = document.querySelector("[data-auth-form]");
@@ -114,8 +135,9 @@
     client.auth.onAuthStateChange((event, session) => {
       window.setTimeout(() => {
         if (session) {
-          showSignedIn(true);
-          setStatus("Signed in successfully.", "success");
+          scrubAuthUrl();
+          redirectToAccountArea();
+          return;
         } else if (event === "SIGNED_OUT") {
           showSignedIn(false);
           setStatus("You have been signed out.", "success");
@@ -131,8 +153,8 @@
       .then(({ data }) => {
         showSignedIn(Boolean(data.session));
         if (data.session) {
-          setStatus("Signed in successfully.", "success");
           scrubAuthUrl();
+          redirectToAccountArea();
         }
       })
       .catch(() => {
@@ -177,8 +199,7 @@
           form.reset();
 
           if (data.session) {
-            showSignedIn(true);
-            setStatus("Account created. You are signed in.", "success");
+            redirectToAccountArea();
           } else {
             setStatus("Account created. Check your email to confirm the address before signing in.", "success");
           }
@@ -187,8 +208,7 @@
           if (error) throw error;
 
           form.reset();
-          showSignedIn(true);
-          setStatus("Signed in successfully.", "success");
+          redirectToAccountArea();
         }
       } catch (error) {
         setStatus(safeErrorMessage(error, mode), "error");
@@ -207,7 +227,7 @@
           const { error } = await client.auth.signInWithOAuth({
             provider: "google",
             options: {
-              redirectTo: new URL("/signin/", window.location.origin).href
+              redirectTo: oauthReturnUrl()
             }
           });
 

@@ -79,9 +79,10 @@
             <strong>Important platform status</strong>
             <p>
               Public sign-in and signup pages now provide email and password authentication through
-              Supabase Auth, together with Google OAuth. Creator profiles, posts, forums, verification
-              badges, subscriptions, paid handle protection, uploads and payments are not confirmed as
-              operational. Sections about those functions describe the rules NovaX expects to apply if
+              Supabase Auth, together with Google OAuth. An authenticated dashboard and My account page
+              are operational for signed-in users. Creator page creation, creator profiles, posts, forums,
+              verification badges, subscriptions, paid handle protection, uploads and payments are not
+              confirmed as operational. Sections about those functions describe the rules NovaX expects to apply if
               and when they launch. Final product, price, checkout and cancellation information will be
               shown before a user commits to a paid service.
             </p>
@@ -143,9 +144,10 @@
             <p>
               When you create or use an authentication account, you must provide accurate, current and
               complete information, keep it updated, and use only an account you are authorised to
-              control. NovaX may request reasonable evidence to prevent fraud, impersonation, duplicate
-              accounts or misuse. A username submitted during registration is account metadata and does
-              not reserve a public handle or create ownership rights in that name.
+              control. The authenticated dashboard and My account page display information for the current
+              signed-in account only. NovaX may request reasonable evidence to prevent fraud, impersonation,
+              duplicate accounts or misuse. A username submitted during registration is account metadata
+              and does not reserve a public handle or create ownership rights in that name.
             </p>
             <p>
               You are responsible for activity carried out through your account unless it results from a
@@ -507,10 +509,11 @@
             <span class="section-number">24</span>
             <h2>Platform availability, maintenance and changes</h2>
             <p>
-              Creator Hub is being developed and may be unavailable, incomplete or changed. The public signup,
-              sign-in and Google OAuth functions are operational. NovaX does not guarantee uninterrupted or
-              error-free operation. It may maintain, test, modify, postpone or discontinue features, subject to
-              applicable law and any binding agreement.
+              Creator Hub is being developed and may be unavailable, incomplete or changed. Public signup,
+              sign-in, Google OAuth, the authenticated dashboard and the My account view are operational.
+              Creator page creation remains under development. NovaX does not guarantee uninterrupted or
+              error-free operation. It may maintain, test, modify, postpone or discontinue features, subject
+              to applicable law and any binding agreement.
             </p>
             <p>
               For a paid service, NovaX will give reasonable notice of a material adverse change where required and
@@ -544,9 +547,9 @@
               protected content.
             </p>
             <p>
-              Supabase handles authentication and session records for the service. The static authentication pages
-              keep session credentials in browser session storage where available and do not log or retain the
-              entered password. You should protect your email account, Google account, device and recovery
+              Supabase handles authentication, account and session records for the service. The static
+              authentication and account pages keep session credentials in browser session storage where available
+              and do not display, log or retain an entered password. You should protect your email account, Google account, device and recovery
               information, sign out on shared devices and report suspected unauthorised access. NovaX will never ask you to disclose your Google password, full payment card
               number, authentication code or recovery code through an unsolicited email or direct message.
             </p>

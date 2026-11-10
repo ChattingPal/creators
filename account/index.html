@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="no-referrer">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self'; connect-src 'self' https://deeegczehhbiofqhhizl.supabase.co; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'self'; upgrade-insecure-requests">
+    <meta name="description" content="Manage your NovaX Creator Hub account.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="canonical" href="https://creators.novaxstudios.art/account/">
+    <link rel="stylesheet" href="/assets/styles.css">
+    <title>My account | NovaX Creator Hub</title>
+  </head>
+  <body data-account-view="account">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="/">NovaX <span>Creator Hub</span></a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms</a>
+        <a href="https://novaxstudios.art/">NovaX Studios</a>
+        <button class="nav-signout" type="button" data-account-signout disabled>Sign out</button>
+      </nav>
+    </header>
+
+    <main class="account-main" id="main-content">
+      <p class="account-loading" data-account-loading role="status">Checking your account...</p>
+
+      <section class="account-shell" data-account-shell hidden aria-labelledby="account-title">
+        <header class="account-header">
+          <div>
+            <p class="eyebrow">Creator Hub account</p>
+            <h1 id="account-title">My account</h1>
+            <p>Review your account details and security options.</p>
+          </div>
+        </header>
+
+        <div class="account-layout">
+          <section class="account-panel" aria-labelledby="details-title">
+            <header class="account-panel-header">
+              <h2 id="details-title">Account details</h2>
+              <p>Your password is never displayed.</p>
+            </header>
+
+            <dl class="account-details">
+              <div class="account-detail">
+                <dt>Name</dt>
+                <dd data-account-name>Creator</dd>
+              </div>
+              <div class="account-detail">
+                <dt>Email</dt>
+                <dd data-account-email>Loading...</dd>
+              </div>
+              <div class="account-detail">
+                <dt>Password</dt>
+                <dd><button class="reset-password-button" type="button" data-reset-toggle>Reset password</button></dd>
+              </div>
+            </dl>
+
+            <form class="password-reset-form" data-password-reset-form method="post" action="/account/" hidden>
+              <div class="form-field">
+                <label for="new-password">New password</label>
+                <input id="new-password" name="new-password" type="password" autocomplete="new-password" minlength="8" maxlength="128" required>
+              </div>
+              <div class="form-field">
+                <label for="confirm-password">Confirm new password</label>
+                <input id="confirm-password" name="confirm-password" type="password" autocomplete="new-password" minlength="8" maxlength="128" required>
+              </div>
+              <div class="password-reset-actions">
+                <button class="auth-submit" type="submit" disabled>Update password</button>
+                <button class="cancel-reset-button" type="button" data-reset-cancel>Cancel</button>
+              </div>
+            </form>
+
+            <p class="account-status" data-account-status role="status" aria-live="polite"></p>
+
+            <div class="account-actions">
+              <a class="request-data-button" href="mailto:contact@novaxstudios.art?subject=Creator%20Hub%20Data%20Request">Request Data</a>
+              <a class="delete-account-button" href="mailto:contact@novaxstudios.art?subject=Creator%20Hub%20Account%20Deletion%20Request">Delete Account</a>
+            </div>
+            <p class="account-action-note">Data and deletion requests open your email application. NovaX may verify your identity before completing a request.</p>
+          </section>
+
+          <aside class="account-sidebar" aria-label="Account navigation">
+            <nav class="account-nav">
+              <a href="/dashboard/">Pages</a>
+              <a href="/account/" aria-current="page">My account</a>
+            </nav>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <div class="footer-company">
+          <strong>NovaX Creator Hub is operated by NovaX Studios Ltd.</strong>
+          <p>Registered in England and Wales, company number 17534097.</p>
+          <p>Registered office: 61 Bridge Street, Kington, HR5 3DJ, United Kingdom.</p>
+        </div>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="mailto:contact@novaxstudios.art">Contact</a>
+          <a href="/privacy/">Privacy Policy</a>
+          <a href="/terms/">Terms of Service</a>
+        </nav>
+      </div>
+      <p class="footer-note">© 2026 NovaX Studios Ltd. Creator Hub is under development.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0" defer></script>
+    <script src="/assets/supabase-client.js" defer></script>
+    <script src="/assets/account-area.js" defer></script>
+  </body>
+</html>
