@@ -483,9 +483,10 @@
               still disclose technical information to the hosting and CDN providers.
             </p>
             <p>
-              The public authentication and account pages use browser session storage for Supabase session
-              credentials where that storage is available. This is intended to keep the session within the
-              current browser tab rather than persistent local storage. Entered passwords, including a new
+              The public authentication and account pages use Supabase's supported browser storage to retain
+              session credentials in the browser. This allows a signed-in session to continue across page reloads
+              and tabs in the same browser profile until the user signs out, the session expires or the stored
+              browser data is removed. Entered passwords, including a new
               password submitted through the reset password page, are not displayed, written to browser storage,
               logged by the page or placed in the page URL. Supabase receives the password directly over HTTPS and manages
               the authentication record. The repository also contains a Next.js session refresh

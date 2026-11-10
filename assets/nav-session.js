@@ -26,18 +26,15 @@
     render(false);
     if (!client) return;
 
-    try {
-      const { data: sessionData, error: sessionError } = await client.auth.getSession();
-      if (sessionError || !sessionData.session) return;
-
-      const { data: userData, error: userError } = await client.auth.getUser();
-      render(!userError && Boolean(userData.user));
-    } catch {
-      render(false);
-    }
-
     client.auth.onAuthStateChange((_event, session) => {
       render(Boolean(session));
     });
+
+    try {
+      const { data, error } = await client.auth.getSession();
+      render(!error && Boolean(data.session));
+    } catch {
+      render(false);
+    }
   });
 })();

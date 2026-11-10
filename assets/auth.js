@@ -139,30 +139,39 @@
       scrubAuthUrl();
     }
 
+    let redirectStarted = false;
+
+    function restoreUiFromSession(session) {
+      const isSignedIn = Boolean(session);
+      showSignedIn(isSignedIn);
+
+      if (isSignedIn && !redirectStarted) {
+        redirectStarted = true;
+        scrubAuthUrl();
+        redirectToAccountArea();
+      }
+    }
+
     client.auth.onAuthStateChange((event, session) => {
       window.setTimeout(() => {
-        if (session) {
-          scrubAuthUrl();
-          redirectToAccountArea();
-          return;
-        } else if (event === "SIGNED_OUT") {
+        restoreUiFromSession(session);
+
+        if (event === "SIGNED_OUT") {
           showSignedIn(false);
           setStatus("You have been signed out.", "success");
-        }
-
-        if (event === "SIGNED_IN" || event === "INITIAL_SESSION") {
+        } else if (event === "SIGNED_IN" || event === "INITIAL_SESSION") {
           scrubAuthUrl();
         }
       }, 0);
     });
 
     client.auth.getSession()
-      .then(({ data }) => {
-        showSignedIn(Boolean(data.session));
-        if (data.session) {
-          scrubAuthUrl();
-          redirectToAccountArea();
+      .then(({ data, error }) => {
+        if (error) {
+          throw error;
         }
+
+        restoreUiFromSession(data.session);
       })
       .catch(() => {
         showSignedIn(false);

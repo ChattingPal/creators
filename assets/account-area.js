@@ -57,24 +57,57 @@
       return;
     }
 
-    const { data, error } = await client.auth.getUser();
-    const user = data?.user;
+    let user = null;
+    let redirectStarted = false;
 
-    if (error || !user) {
+    function redirectToSignInOnce() {
+      if (redirectStarted) return;
+      redirectStarted = true;
       signInRedirect();
+    }
+
+    function renderUser(nextUser) {
+      if (!nextUser) return;
+      user = nextUser;
+
+      setText("[data-account-name]", accountDisplayName(user));
+      setText("[data-account-email]", user.email || "Not available");
+
+      if (loading) loading.hidden = true;
+      if (shell) shell.hidden = false;
+      if (signoutButton) signoutButton.disabled = false;
+      if (resetEmailButton) resetEmailButton.disabled = !user.email;
+    }
+
+    client.auth.onAuthStateChange((event, session) => {
+      window.setTimeout(() => {
+        if (event === "SIGNED_OUT") {
+          redirectToSignInOnce();
+          return;
+        }
+
+        if (session?.user) {
+          renderUser(session.user);
+        }
+      }, 0);
+    });
+
+    const { data: sessionData, error: sessionError } = await client.auth.getSession();
+
+    if (sessionError || !sessionData.session) {
+      redirectToSignInOnce();
       return;
     }
 
-    const name = accountDisplayName(user);
-    const email = user.email || "Not available";
+    const { data: userData, error: userError } = await client.auth.getUser();
+    user = userData?.user;
 
-    setText("[data-account-name]", name);
-    setText("[data-account-email]", email);
+    if (userError || !user) {
+      redirectToSignInOnce();
+      return;
+    }
 
-    if (loading) loading.hidden = true;
-    if (shell) shell.hidden = false;
-    if (signoutButton) signoutButton.disabled = false;
-    if (resetEmailButton) resetEmailButton.disabled = !user.email;
+    renderUser(user);
 
     if (signoutButton) {
       signoutButton.addEventListener("click", async () => {

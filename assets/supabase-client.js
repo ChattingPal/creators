@@ -6,27 +6,13 @@
     return;
   }
 
-  let sessionStorageAvailable = false;
-  try {
-    const testKey = "novax-auth-storage-test";
-    window.sessionStorage.setItem(testKey, "1");
-    window.sessionStorage.removeItem(testKey);
-    sessionStorageAvailable = true;
-  } catch {
-    sessionStorageAvailable = false;
-  }
-
   const authOptions = {
     autoRefreshToken: true,
     detectSessionInUrl: true,
     flowType: "pkce",
-    persistSession: sessionStorageAvailable,
+    persistSession: true,
     storageKey: "novax-creator-hub-auth"
   };
-
-  if (sessionStorageAvailable) {
-    authOptions.storage = window.sessionStorage;
-  }
 
   window.novaxSupabase = createClient(
     "https://deeegczehhbiofqhhizl.supabase.co",
