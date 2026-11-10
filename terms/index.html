@@ -26,8 +26,9 @@
         <p class="eyebrow">Rules for using Creator Hub</p>
         <h1 id="terms-title">Terms of Service</h1>
         <p class="legal-lead">
-          These terms govern access to NovaX Creator Hub, the public development website and any
-          Creator Hub features that NovaX Studios Ltd. makes available under these terms.
+          These terms govern access to NovaX Creator Hub, its operational authentication services,
+          the public development website and any Creator Hub features that NovaX Studios Ltd. makes
+          available under these terms.
         </p>
         <div class="date-row">
           <span><strong>Effective:</strong> 10 November 2026</span>
@@ -76,12 +77,12 @@
           <div class="legal-status">
             <strong>Important platform status</strong>
             <p>
-              Creator Hub is currently a public informational site marked as in development. Accounts,
+              Supabase authentication, Google OAuth and session handling are configured and have been
+              successfully tested. The public frontend does not yet provide a signup page. Creator
               profiles, posts, forums, verification badges, subscriptions, paid handle protection,
-              uploads and payments are not available in the reviewed public frontend. Sections about
-              those functions describe the rules NovaX expects to apply if and when they launch.
-              Final product, price, checkout and cancellation information will be shown before a user
-              commits to a paid service.
+              uploads and payments are not confirmed as operational. Sections about those functions
+              describe the rules NovaX expects to apply if and when they launch. Final product, price,
+              checkout and cancellation information will be shown before a user commits to a paid service.
             </p>
           </div>
 
@@ -90,9 +91,10 @@
             <h2>Acceptance and current status</h2>
             <p>
               By accessing the public Creator Hub website, you agree to the provisions that reasonably
-              apply to public website use. Planned account, community and paid service provisions will
-              apply only when the relevant feature is made available and you are asked to accept the
-              applicable terms.
+              apply to public website use. If NovaX gives you authorised access to the tested authentication
+              service, the account, Google sign-in, security, privacy, suspension and termination provisions
+              that relate to authentication also apply. Community, profile and paid service provisions apply
+              only when the relevant feature is made available and you are asked to accept the applicable terms.
             </p>
             <p>
               If you do not agree, do not use the relevant service. These terms do not remove any
@@ -120,9 +122,11 @@
             <span class="section-number">03</span>
             <h2>Eligibility</h2>
             <p>
-              Anyone may view the public informational website, subject to law and these terms. Planned
-              Creator Hub accounts are intended for people aged 16 or over. NovaX may restrict access
-              by country, age, legal capacity, sanctions status, risk or service availability.
+              Anyone may view the public informational website, subject to law and these terms. Public
+              signup is not yet available. Any person given authorised access to the tested authentication
+              service must be aged 16 or over. Future public Creator Hub accounts are also intended for
+              people aged 16 or over. NovaX may restrict access by country, age, legal capacity, sanctions
+              status, risk or service availability.
             </p>
             <p>
               You must be legally able to use the service and must not use it where doing so would violate
@@ -134,11 +138,13 @@
           <section class="legal-section" id="accounts">
             <span class="section-number">04</span>
             <h2>Account registration and accurate information</h2>
-            <span class="planned-label">Planned</span>
+            <span class="active-label">Authentication operational; public signup not released</span>
             <p>
-              When accounts become available, you must provide accurate, current and complete information,
-              keep it updated, and use only an account you are authorised to control. NovaX may request
-              reasonable evidence to prevent fraud, impersonation, duplicate accounts or misuse.
+              Where NovaX gives you access to the authentication service, you must provide accurate,
+              current and complete information, keep it updated, and use only an account you are
+              authorised to control. NovaX may request reasonable evidence to prevent fraud,
+              impersonation, duplicate accounts or misuse. Additional public account registration
+              requirements will apply only when signup is released.
             </p>
             <p>
               You are responsible for activity carried out through your account unless it results from a
@@ -150,11 +156,13 @@
           <section class="legal-section" id="google">
             <span class="section-number">05</span>
             <h2>Google sign in and account security</h2>
-            <span class="planned-label">Not currently available</span>
+            <span class="active-label">Configured and successfully tested</span>
             <p>
-              If Google sign in is offered, you may authorise Google and Supabase to authenticate you and
-              provide the account information identified on Google's consent screen. Google keeps control
-              of your Google credentials. NovaX does not receive your Google password.
+              Google OAuth is operational for authorised authentication users, although public signup is
+              not yet available. You may authorise Google and Supabase to authenticate you and provide the
+              limited identity information identified on Google's consent screen. The configured sign-in
+              process does not request sensitive Google scopes. Google keeps control of your Google
+              credentials. NovaX does not receive your Google password.
             </p>
             <p>
               You must maintain access to your chosen sign in method and keep its security and recovery
@@ -462,11 +470,12 @@
           <section class="legal-section" id="suspension">
             <span class="section-number">22</span>
             <h2>Account suspension and termination</h2>
-            <span class="planned-label">Applies when accounts launch</span>
+            <span class="pending-label">Applies to authorised authentication users and future accounts</span>
             <p>
-              You may close your account through the method NovaX provides. NovaX may restrict, suspend or terminate
-              an account where reasonably necessary for a serious or repeated breach, fraud, impersonation, security
-              risk, unlawful activity, non-payment, protection of users, or compliance with law.
+              Until a self-service account closure method is provided, you may request closure by contacting NovaX.
+              NovaX may restrict, suspend or terminate authenticated access or a future account where reasonably
+              necessary for a serious or repeated breach, fraud, impersonation, security risk, unlawful activity,
+              non-payment, protection of users, or compliance with law.
             </p>
             <p>
               Where appropriate, NovaX will give notice, explain the main reason and allow time to correct a breach.
@@ -496,8 +505,10 @@
             <span class="section-number">24</span>
             <h2>Platform availability, maintenance and changes</h2>
             <p>
-              Creator Hub is being developed and may be unavailable, incomplete or changed. NovaX does not guarantee
-              uninterrupted or error-free operation. It may maintain, test, modify, postpone or discontinue features.
+              Creator Hub is being developed and may be unavailable, incomplete or changed. The authentication
+              service is operational for authorised testing, but public signup is not yet released. NovaX does not
+              guarantee uninterrupted or error-free operation. It may maintain, test, modify, postpone or discontinue
+              features, subject to applicable law and any binding agreement.
             </p>
             <p>
               For a paid service, NovaX will give reasonable notice of a material adverse change where required and
@@ -510,7 +521,8 @@
             <span class="section-number">25</span>
             <h2>External websites and third-party integrations</h2>
             <p>
-              Creator Hub may use or link to GitHub Pages, jsDelivr, Supabase, Google, payment providers, social
+              Creator Hub currently uses GitHub Pages and jsDelivr for the public site, and Supabase and Google
+              for the configured authentication service. Future features may use payment providers, social
               networks, creator shops and other services. External operators control their own services and terms.
               NovaX is not responsible for an external service merely because it is linked or integrated.
             </p>
@@ -530,9 +542,10 @@
               protected content.
             </p>
             <p>
-              You should use a secure sign in method, protect your device and report suspected unauthorised access.
-              NovaX will never ask you to disclose your Google password, full payment card number, authentication
-              code or recovery code through an unsolicited email or direct message.
+              Supabase handles authentication and session records for the configured service. You should protect
+              your Google account, device and recovery information, sign out on shared devices and report suspected
+              unauthorised access. NovaX will never ask you to disclose your Google password, full payment card
+              number, authentication code or recovery code through an unsolicited email or direct message.
             </p>
           </section>
 
