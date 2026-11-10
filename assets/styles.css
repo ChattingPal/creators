@@ -1899,7 +1899,7 @@ tr:last-child td {
 
 .public-profile-main {
   min-height: calc(100vh - 5rem);
-  padding: clamp(2.5rem, 6vw, 4.5rem) max(1.25rem, calc((100vw - 900px) / 2));
+  padding: clamp(2rem, 5vw, 3.75rem) max(1.25rem, calc((100vw - 900px) / 2));
 }
 
 .public-profile-loading,
@@ -1920,14 +1920,14 @@ tr:last-child td {
 .public-profile-header {
   display: flex;
   align-items: center;
-  gap: clamp(1rem, 3vw, 1.65rem);
+  gap: clamp(0.9rem, 2.5vw, 1.4rem);
 }
 
 .public-profile-avatar {
   display: grid;
-  flex: 0 0 clamp(5.5rem, 14vw, 7.5rem);
-  width: clamp(5.5rem, 14vw, 7.5rem);
-  height: clamp(5.5rem, 14vw, 7.5rem);
+  flex: 0 0 clamp(4.75rem, 12vw, 6.5rem);
+  width: clamp(4.75rem, 12vw, 6.5rem);
+  height: clamp(4.75rem, 12vw, 6.5rem);
   place-items: center;
   overflow: hidden;
   color: #ffffff;
@@ -1935,7 +1935,7 @@ tr:last-child td {
   border: 3px solid #818cf8;
   border-radius: 50%;
   box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.25);
-  font-size: clamp(1.35rem, 4vw, 2rem);
+  font-size: clamp(1.15rem, 3.5vw, 1.7rem);
   font-weight: 900;
 }
 
@@ -1950,7 +1950,7 @@ tr:last-child td {
   min-width: 0;
   align-items: center;
   gap: clamp(0.5rem, 1.2vw, 0.75rem);
-  font-size: clamp(2rem, 6vw, 3.6rem);
+  font-size: clamp(1.75rem, 5vw, 3rem);
 }
 
 .public-profile-header h1 {
@@ -1990,7 +1990,7 @@ tr:last-child td {
 }
 
 .public-profile-about {
-  margin-top: clamp(2rem, 5vw, 3.5rem);
+  margin-top: clamp(1.75rem, 4vw, 3rem);
   padding: clamp(1.4rem, 5vw, 2.4rem);
   color: #20263a;
   background: #f4f6fb;
