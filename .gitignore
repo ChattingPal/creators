@@ -3,5 +3,7 @@ node_modules/
 out/
 npm-debug.log*
 .DS_Store
+.env.local
+.env.*.local
 
-# Never commit server-only Supabase secret or service-role keys.
+# Keep server-only secrets and local configuration out of Git.
