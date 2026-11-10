@@ -1,0 +1,38 @@
+name: Deploy delete account function
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "supabase/config.toml"
+      - "supabase/functions/delete-account/**"
+      - ".github/workflows/deploy-delete-account-function.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-delete-account-function
+  cancel-in-progress: false
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+
+      - name: Test deletion handler
+        run: node --test supabase/functions/delete-account/handler.test.mjs
+
+      - uses: supabase/setup-cli@3c2f5e2ae34c34e428e8e206e2c4d21fa2d20fbf
+        with:
+          version: latest
+
+      - name: Deploy authenticated deletion function
+        run: supabase functions deploy delete-account --project-ref deeegczehhbiofqhhizl
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
