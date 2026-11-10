@@ -1024,6 +1024,19 @@ tr:last-child td {
   border-color: #818cf8;
 }
 
+.reset-password-button:disabled {
+  cursor: wait;
+  opacity: 0.62;
+}
+
+.password-reset-message {
+  margin: 0.45rem 0 0;
+  color: #166534;
+  font-size: 0.78rem;
+  font-weight: 750;
+  line-height: 1.45;
+}
+
 .account-actions {
   display: flex;
   flex-wrap: wrap;

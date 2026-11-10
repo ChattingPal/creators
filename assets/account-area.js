@@ -34,19 +34,55 @@
     window.location.replace("/signin/?next=" + encodeURIComponent(next));
   }
 
+  function recoveryRedirectUrl() {
+    const url = new URL("/account/", window.location.origin);
+    url.searchParams.set("password_recovery", "1");
+    return url.href;
+  }
+
+  function clearRecoveryUrl() {
+    const url = new URL(window.location.href);
+    url.searchParams.delete("password_recovery");
+    url.searchParams.delete("code");
+    window.history.replaceState(null, "", url.pathname + url.search + url.hash);
+  }
+
   window.addEventListener("DOMContentLoaded", async () => {
     const client = window.novaxSupabase;
     const loading = document.querySelector("[data-account-loading]");
     const shell = document.querySelector("[data-account-shell]");
     const signoutButton = document.querySelector("[data-account-signout]");
-    const resetToggle = document.querySelector("[data-reset-toggle]");
+    const resetEmailButton = document.querySelector("[data-reset-email]");
+    const resetEmailMessage = document.querySelector("[data-password-reset-message]");
     const resetForm = document.querySelector("[data-password-reset-form]");
     const resetCancel = document.querySelector("[data-reset-cancel]");
+    const recoveryRequested =
+      new URL(window.location.href).searchParams.get("password_recovery") === "1";
+
+    function setResetEmailMessage(message) {
+      if (!resetEmailMessage) return;
+      resetEmailMessage.textContent = message;
+      resetEmailMessage.hidden = !message;
+    }
+
+    function openPasswordForm() {
+      if (!resetForm) return;
+      resetForm.hidden = false;
+      if (resetEmailButton) resetEmailButton.hidden = true;
+      setResetEmailMessage("");
+      resetForm.querySelector('input[name="new-password"]')?.focus();
+    }
 
     if (!client) {
       if (loading) loading.textContent = "Account services are temporarily unavailable.";
       return;
     }
+
+    client.auth.onAuthStateChange((event, session) => {
+      if (event === "PASSWORD_RECOVERY" && session) {
+        openPasswordForm();
+      }
+    });
 
     const { data, error } = await client.auth.getUser();
     const user = data?.user;
@@ -65,6 +101,11 @@
     if (loading) loading.hidden = true;
     if (shell) shell.hidden = false;
     if (signoutButton) signoutButton.disabled = false;
+    if (resetEmailButton) resetEmailButton.disabled = !user.email;
+
+    if (recoveryRequested) {
+      openPasswordForm();
+    }
 
     if (signoutButton) {
       signoutButton.addEventListener("click", async () => {
@@ -81,20 +122,39 @@
       });
     }
 
-    if (resetToggle && resetForm) {
-      resetToggle.addEventListener("click", () => {
-        resetForm.hidden = false;
-        resetToggle.hidden = true;
-        resetForm.querySelector('input[name="new-password"]')?.focus();
+    if (resetEmailButton) {
+      resetEmailButton.addEventListener("click", async () => {
+        if (!user.email) {
+          setStatus("No linked email address is available for this account.", "error");
+          return;
+        }
+
+        resetEmailButton.disabled = true;
+        setResetEmailMessage("");
+        setStatus("");
+
+        try {
+          const { error: resetError } = await client.auth.resetPasswordForEmail(user.email, {
+            redirectTo: recoveryRedirectUrl()
+          });
+          if (resetError) throw resetError;
+
+          setResetEmailMessage("We've sent you a link to the linked email address.");
+        } catch {
+          setStatus("The password reset email could not be sent. Please try again.", "error");
+        } finally {
+          resetEmailButton.disabled = false;
+        }
       });
     }
 
-    if (resetCancel && resetForm && resetToggle) {
+    if (resetCancel && resetForm && resetEmailButton) {
       resetCancel.addEventListener("click", () => {
         resetForm.reset();
         resetForm.hidden = true;
-        resetToggle.hidden = false;
+        resetEmailButton.hidden = false;
         setStatus("");
+        clearRecoveryUrl();
       });
     }
 
@@ -133,10 +193,11 @@
 
           resetForm.reset();
           resetForm.hidden = true;
-          if (resetToggle) resetToggle.hidden = false;
+          if (resetEmailButton) resetEmailButton.hidden = false;
+          clearRecoveryUrl();
           setStatus("Your password has been updated.", "success");
         } catch {
-          setStatus("The password could not be updated. Sign in again and retry.", "error");
+          setStatus("The password could not be updated. Open a new reset link and try again.", "error");
         } finally {
           passwordInput.value = "";
           confirmationInput.value = "";
