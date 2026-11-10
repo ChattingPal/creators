@@ -65,9 +65,9 @@
 
             <div class="account-actions">
               <a class="request-data-button" href="mailto:contact@novaxstudios.art?subject=Creator%20Hub%20Data%20Request">Request Data</a>
-              <a class="delete-account-button" href="mailto:contact@novaxstudios.art?subject=Creator%20Hub%20Account%20Deletion%20Request">Delete Account</a>
+              <button class="delete-account-button" type="button" data-delete-account-open disabled>Delete Account</button>
             </div>
-            <p class="account-action-note">Data and deletion requests open your email application. NovaX may verify your identity before completing a request.</p>
+            <p class="account-action-note">Data requests open your email application. Account deletion requires confirmation and is processed securely through your signed-in session.</p>
           </section>
 
           <aside class="account-sidebar" aria-label="Account navigation">
@@ -79,6 +79,27 @@
         </div>
       </section>
     </main>
+
+    <dialog class="delete-account-dialog" data-delete-account-dialog aria-labelledby="delete-account-title" aria-describedby="delete-account-warning">
+      <div class="delete-account-dialog-content">
+        <p class="eyebrow">Account security</p>
+        <h2 id="delete-account-title">Delete account?</h2>
+        <p class="delete-account-warning" id="delete-account-warning">Deleting your account is permanent and irreversible.</p>
+        <p>This removes access to your NovaX Creator Hub account. Information that must be retained for legal or security reasons remains subject to the Privacy Policy.</p>
+
+        <label class="delete-account-confirmation">
+          <input type="checkbox" data-delete-account-checkbox>
+          <span>I understand that this action cannot be undone.</span>
+        </label>
+
+        <p class="delete-account-status" data-delete-account-status role="status" aria-live="polite"></p>
+
+        <div class="delete-account-dialog-actions">
+          <button class="delete-account-cancel" type="button" data-delete-account-cancel>Cancel</button>
+          <button class="delete-account-confirm" type="button" data-delete-account-confirm disabled>Delete</button>
+        </div>
+      </div>
+    </dialog>
 
     <footer class="site-footer">
       <div class="footer-grid">
@@ -98,6 +119,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0" defer></script>
     <script src="/assets/supabase-client.js?v=20261110-auth1" defer></script>
-    <script src="/assets/account-area.js?v=20261110-auth1" defer></script>
+    <script src="/assets/account-area.js?v=20261110-delete1" defer></script>
   </body>
 </html>

@@ -1071,10 +1071,131 @@ tr:last-child td {
   background: #991b1b;
 }
 
+.delete-account-button:disabled {
+  cursor: wait;
+  opacity: 0.62;
+}
+
 .account-action-note {
   margin: 0.9rem 0 0;
   color: #68738a;
   font-size: 0.8rem;
+}
+
+.delete-account-dialog {
+  width: min(31rem, calc(100% - 2rem));
+  max-height: calc(100dvh - 2rem);
+  padding: 0;
+  color: #20263a;
+  background: #ffffff;
+  border: 1px solid #cbd2e1;
+  border-radius: 0.9rem;
+  box-shadow: 0 1.5rem 4rem rgba(15, 23, 42, 0.3);
+}
+
+.delete-account-dialog::backdrop {
+  background: rgba(15, 23, 42, 0.68);
+}
+
+.delete-account-dialog-content {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1.25rem, 4vw, 2rem);
+}
+
+.delete-account-dialog h2,
+.delete-account-dialog p {
+  margin: 0;
+}
+
+.delete-account-warning {
+  color: #991b1b;
+  font-weight: 850;
+}
+
+.delete-account-confirmation {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.9rem;
+  background: #f8fafc;
+  border: 1px solid #d6dceb;
+  border-radius: 0.65rem;
+  cursor: pointer;
+}
+
+.delete-account-confirmation input {
+  width: 1.05rem;
+  height: 1.05rem;
+  margin: 0.15rem 0 0;
+  accent-color: #b91c1c;
+}
+
+.delete-account-status {
+  min-height: 1.35rem;
+  font-size: 0.84rem;
+  font-weight: 750;
+}
+
+.delete-account-status[data-state="success"] {
+  color: #166534;
+}
+
+.delete-account-status[data-state="error"] {
+  color: #991b1b;
+}
+
+.delete-account-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.7rem;
+}
+
+.delete-account-cancel,
+.delete-account-confirm {
+  min-height: 2.7rem;
+  padding: 0.68rem 1rem;
+  border-radius: 0.6rem;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.delete-account-cancel {
+  color: #20263a;
+  background: #ffffff;
+  border: 1px solid #c7cfdf;
+}
+
+.delete-account-cancel:hover,
+.delete-account-cancel:focus-visible {
+  background: #e9edfa;
+  border-color: #818cf8;
+}
+
+.delete-account-confirm {
+  color: #ffffff;
+  background: #b91c1c;
+  border: 1px solid #991b1b;
+}
+
+.delete-account-confirm:hover:not(:disabled),
+.delete-account-confirm:focus-visible:not(:disabled) {
+  background: #991b1b;
+}
+
+.delete-account-confirm:disabled {
+  color: #f5e8e8;
+  background: #a88f91;
+  border-color: #927d7f;
+  cursor: not-allowed;
+}
+
+.delete-account-cancel:disabled,
+.delete-account-confirmation input:disabled {
+  cursor: wait;
+  opacity: 0.68;
 }
 
 .password-reset-form {

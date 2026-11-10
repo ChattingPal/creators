@@ -45,6 +45,12 @@
     const signoutButton = document.querySelector("[data-account-signout]");
     const resetEmailButton = document.querySelector("[data-reset-email]");
     const resetEmailMessage = document.querySelector("[data-password-reset-message]");
+    const deleteOpenButton = document.querySelector("[data-delete-account-open]");
+    const deleteDialog = document.querySelector("[data-delete-account-dialog]");
+    const deleteCheckbox = document.querySelector("[data-delete-account-checkbox]");
+    const deleteCancelButton = document.querySelector("[data-delete-account-cancel]");
+    const deleteConfirmButton = document.querySelector("[data-delete-account-confirm]");
+    const deleteStatus = document.querySelector("[data-delete-account-status]");
 
     function setResetEmailMessage(message) {
       if (!resetEmailMessage) return;
@@ -59,6 +65,29 @@
 
     let user = null;
     let redirectStarted = false;
+    let deletionCompleted = false;
+    let deletionInProgress = false;
+
+    function setDeleteStatus(message, state = "") {
+      if (!deleteStatus) return;
+      deleteStatus.textContent = message;
+      if (state) {
+        deleteStatus.dataset.state = state;
+      } else {
+        delete deleteStatus.dataset.state;
+      }
+    }
+
+    function resetDeleteDialog() {
+      deletionInProgress = false;
+      if (deleteCheckbox) {
+        deleteCheckbox.checked = false;
+        deleteCheckbox.disabled = false;
+      }
+      if (deleteCancelButton) deleteCancelButton.disabled = false;
+      if (deleteConfirmButton) deleteConfirmButton.disabled = true;
+      setDeleteStatus("");
+    }
 
     function redirectToSignInOnce() {
       if (redirectStarted) return;
@@ -77,12 +106,13 @@
       if (shell) shell.hidden = false;
       if (signoutButton) signoutButton.disabled = false;
       if (resetEmailButton) resetEmailButton.disabled = !user.email;
+      if (deleteOpenButton) deleteOpenButton.disabled = false;
     }
 
     client.auth.onAuthStateChange((event, session) => {
       window.setTimeout(() => {
         if (event === "SIGNED_OUT") {
-          redirectToSignInOnce();
+          if (!deletionCompleted) redirectToSignInOnce();
           return;
         }
 
@@ -146,6 +176,82 @@
           setStatus("The password reset email could not be sent. Please try again.", "error");
         } finally {
           resetEmailButton.disabled = false;
+        }
+      });
+    }
+
+    if (deleteOpenButton && deleteDialog) {
+      deleteOpenButton.addEventListener("click", () => {
+        resetDeleteDialog();
+        deleteDialog.showModal();
+        deleteCheckbox?.focus();
+      });
+
+      deleteDialog.addEventListener("close", () => {
+        resetDeleteDialog();
+        deleteOpenButton.focus();
+      });
+
+      deleteDialog.addEventListener("cancel", (event) => {
+        if (deletionInProgress) event.preventDefault();
+      });
+
+      deleteDialog.addEventListener("click", (event) => {
+        if (!deletionInProgress && event.target === deleteDialog) deleteDialog.close();
+      });
+    }
+
+    if (deleteCheckbox && deleteConfirmButton) {
+      deleteCheckbox.addEventListener("change", () => {
+        deleteConfirmButton.disabled = !deleteCheckbox.checked;
+      });
+    }
+
+    if (deleteCancelButton && deleteDialog) {
+      deleteCancelButton.addEventListener("click", () => {
+        deleteDialog.close();
+      });
+    }
+
+    if (deleteConfirmButton && deleteCheckbox) {
+      deleteConfirmButton.addEventListener("click", async () => {
+        if (!deleteCheckbox.checked || deleteConfirmButton.disabled) return;
+
+        deletionInProgress = true;
+        deleteCheckbox.disabled = true;
+        deleteConfirmButton.disabled = true;
+        if (deleteCancelButton) deleteCancelButton.disabled = true;
+        setDeleteStatus("Deleting your account...");
+
+        try {
+          const { data: deletionData, error: deletionError } = await client.functions.invoke(
+            "delete-account",
+            { body: { confirmation: "DELETE_MY_ACCOUNT" } }
+          );
+
+          if (deletionError || deletionData?.deleted !== true) {
+            throw deletionError || new Error("Account deletion was not confirmed.");
+          }
+
+          deletionCompleted = true;
+          setDeleteStatus("Your account has been deleted.", "success");
+
+          try {
+            await client.auth.signOut({ scope: "local" });
+          } catch {
+            // The server has already removed the account and its sessions.
+          }
+
+          window.location.replace("/signin/");
+        } catch {
+          deletionInProgress = false;
+          deleteCheckbox.disabled = false;
+          deleteConfirmButton.disabled = !deleteCheckbox.checked;
+          if (deleteCancelButton) deleteCancelButton.disabled = false;
+          setDeleteStatus(
+            "Your account could not be deleted. Please try again or contact support.",
+            "error"
+          );
         }
       });
     }
