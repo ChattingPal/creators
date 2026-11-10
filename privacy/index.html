@@ -68,7 +68,8 @@
             <p>
               Public sign-in and signup pages now provide email and password authentication through
               Supabase Auth, together with Google and Discord OAuth. An authenticated dashboard and My account page
-              provide access to the signed-in user's own account details. Supabase authentication,
+              provide access to the signed-in user's own account details, and the reset password page
+              handles password recovery links. Supabase authentication,
               backend services and session handling are operational. Creator page creation, creator
               profiles, subscriptions, payments, uploads, forums, verification, analytics and advertising
               are not confirmed as operational.
@@ -92,7 +93,7 @@
               <div class="info-card">
                 <span class="active-label">Operational</span>
                 <strong>Authentication and backend services</strong>
-                <p>Supabase authentication and backend services, Google OAuth, Discord OAuth, session handling, the authenticated dashboard and My account view are operational. Creator page creation remains under development.</p>
+                <p>Supabase authentication and backend services, Google OAuth, Discord OAuth, session handling, the authenticated dashboard, My account view and reset password page are operational. Creator page creation remains under development.</p>
               </div>
               <div class="info-card">
                 <span class="active-label">Active now</span>
@@ -184,7 +185,8 @@
               <li>directly from a person who emails or otherwise contacts NovaX;</li>
               <li>automatically through ordinary hosting and CDN network requests;</li>
               <li>through the public signup and sign-in pages, including email and password authentication and the configured Google and Discord OAuth processes;</li>
-              <li>through the authenticated dashboard and My account page when a user views account details, changes a password or starts a data or deletion request;</li>
+              <li>through the authenticated dashboard and My account page when a user views account details or starts a data or deletion request;</li>
+              <li>through the reset password page when a user follows a recovery link and submits a new password;</li>
               <li>in the future, through creator page creation, profile editing, image uploads, posts, comments, support requests and additional account settings;</li>
               <li>in the future, from a payment provider, limited to transaction, billing and subscription information required to administer a purchase;</li>
               <li>in the future, from verification providers or public creator accounts when identity or account ownership must be checked; and</li>
@@ -484,8 +486,8 @@
               The public authentication and account pages use browser session storage for Supabase session
               credentials where that storage is available. This is intended to keep the session within the
               current browser tab rather than persistent local storage. Entered passwords, including a new
-              password submitted through My account, are not displayed, written to browser storage, logged by
-              the page or placed in the page URL. Supabase receives the password directly over HTTPS and manages
+              password submitted through the reset password page, are not displayed, written to browser storage,
+              logged by the page or placed in the page URL. Supabase receives the password directly over HTTPS and manages
               the authentication record. The repository also contains a Next.js session refresh
               proxy, but GitHub Pages does not execute that server code. It must not be treated as an active
               control for the current static frontend.

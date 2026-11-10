@@ -793,6 +793,22 @@ tr:last-child td {
   width: 100%;
 }
 
+.reset-invalid {
+  display: grid;
+  gap: 0.9rem;
+  text-align: center;
+}
+
+.reset-invalid p {
+  margin: 0;
+  color: #991b1b;
+  font-weight: 800;
+}
+
+.reset-invalid .button {
+  width: 100%;
+}
+
 [hidden] {
   display: none !important;
 }

@@ -35,16 +35,7 @@
   }
 
   function recoveryRedirectUrl() {
-    const url = new URL("/account/", window.location.origin);
-    url.searchParams.set("password_recovery", "1");
-    return url.href;
-  }
-
-  function clearRecoveryUrl() {
-    const url = new URL(window.location.href);
-    url.searchParams.delete("password_recovery");
-    url.searchParams.delete("code");
-    window.history.replaceState(null, "", url.pathname + url.search + url.hash);
+    return new URL("/reset-password/", window.location.origin).href;
   }
 
   window.addEventListener("DOMContentLoaded", async () => {
@@ -54,10 +45,6 @@
     const signoutButton = document.querySelector("[data-account-signout]");
     const resetEmailButton = document.querySelector("[data-reset-email]");
     const resetEmailMessage = document.querySelector("[data-password-reset-message]");
-    const resetForm = document.querySelector("[data-password-reset-form]");
-    const resetCancel = document.querySelector("[data-reset-cancel]");
-    const recoveryRequested =
-      new URL(window.location.href).searchParams.get("password_recovery") === "1";
 
     function setResetEmailMessage(message) {
       if (!resetEmailMessage) return;
@@ -65,24 +52,10 @@
       resetEmailMessage.hidden = !message;
     }
 
-    function openPasswordForm() {
-      if (!resetForm) return;
-      resetForm.hidden = false;
-      if (resetEmailButton) resetEmailButton.hidden = true;
-      setResetEmailMessage("");
-      resetForm.querySelector('input[name="new-password"]')?.focus();
-    }
-
     if (!client) {
       if (loading) loading.textContent = "Account services are temporarily unavailable.";
       return;
     }
-
-    client.auth.onAuthStateChange((event, session) => {
-      if (event === "PASSWORD_RECOVERY" && session) {
-        openPasswordForm();
-      }
-    });
 
     const { data, error } = await client.auth.getUser();
     const user = data?.user;
@@ -102,10 +75,6 @@
     if (shell) shell.hidden = false;
     if (signoutButton) signoutButton.disabled = false;
     if (resetEmailButton) resetEmailButton.disabled = !user.email;
-
-    if (recoveryRequested) {
-      openPasswordForm();
-    }
 
     if (signoutButton) {
       signoutButton.addEventListener("click", async () => {
@@ -144,64 +113,6 @@
           setStatus("The password reset email could not be sent. Please try again.", "error");
         } finally {
           resetEmailButton.disabled = false;
-        }
-      });
-    }
-
-    if (resetCancel && resetForm && resetEmailButton) {
-      resetCancel.addEventListener("click", () => {
-        resetForm.reset();
-        resetForm.hidden = true;
-        resetEmailButton.hidden = false;
-        setStatus("");
-        clearRecoveryUrl();
-      });
-    }
-
-    if (resetForm) {
-      const submitButton = resetForm.querySelector('button[type="submit"]');
-      if (submitButton) submitButton.disabled = false;
-
-      resetForm.addEventListener("submit", async (event) => {
-        event.preventDefault();
-
-        if (!resetForm.reportValidity()) return;
-
-        const passwordInput = resetForm.elements["new-password"];
-        const confirmationInput = resetForm.elements["confirm-password"];
-        const password = passwordInput.value;
-        const confirmation = confirmationInput.value;
-
-        if (password !== confirmation) {
-          setStatus("The new passwords do not match.", "error");
-          confirmationInput.value = "";
-          confirmationInput.focus();
-          return;
-        }
-
-        if (password.length < 8) {
-          setStatus("Use at least 8 characters for the new password.", "error");
-          return;
-        }
-
-        if (submitButton) submitButton.disabled = true;
-        setStatus("Updating your password...");
-
-        try {
-          const { error: updateError } = await client.auth.updateUser({ password });
-          if (updateError) throw updateError;
-
-          resetForm.reset();
-          resetForm.hidden = true;
-          if (resetEmailButton) resetEmailButton.hidden = false;
-          clearRecoveryUrl();
-          setStatus("Your password has been updated.", "success");
-        } catch {
-          setStatus("The password could not be updated. Open a new reset link and try again.", "error");
-        } finally {
-          passwordInput.value = "";
-          confirmationInput.value = "";
-          if (submitButton) submitButton.disabled = false;
         }
       });
     }
