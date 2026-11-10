@@ -46,7 +46,10 @@
             <dl class="account-details">
               <div class="account-detail">
                 <dt>Name</dt>
-                <dd data-account-name>Creator</dd>
+                <dd class="account-name-value">
+                  <span data-account-name>Creator</span>
+                  <button class="edit-name-button" type="button" data-edit-name-open disabled>Change name</button>
+                </dd>
               </div>
               <div class="account-detail">
                 <dt>Email</dt>
@@ -79,6 +82,26 @@
         </div>
       </section>
     </main>
+
+    <dialog class="name-edit-dialog" data-name-edit-dialog aria-labelledby="name-edit-title">
+      <form class="name-edit-form" data-name-edit-form method="post" action="/account/">
+        <p class="eyebrow">Account details</p>
+        <h2 id="name-edit-title">Change name</h2>
+        <p>Choose the name shown in your NovaX Creator Hub account.</p>
+
+        <div class="form-field">
+          <label for="account-display-name">Name</label>
+          <input id="account-display-name" name="display-name" type="text" autocomplete="name" minlength="1" maxlength="80" required>
+        </div>
+
+        <p class="name-edit-status" data-name-edit-status role="status" aria-live="polite"></p>
+
+        <div class="name-edit-actions">
+          <button class="name-edit-cancel" type="button" data-name-edit-cancel>Cancel</button>
+          <button class="name-edit-save" type="submit">Save changes</button>
+        </div>
+      </form>
+    </dialog>
 
     <dialog class="delete-account-dialog" data-delete-account-dialog aria-labelledby="delete-account-title" aria-describedby="delete-account-warning">
       <div class="delete-account-dialog-content">
@@ -119,6 +142,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0" defer></script>
     <script src="/assets/supabase-client.js?v=20261110-auth1" defer></script>
-    <script src="/assets/account-area.js?v=20261110-delete1" defer></script>
+    <script src="/assets/account-area.js?v=20261110-profile1" defer></script>
   </body>
 </html>

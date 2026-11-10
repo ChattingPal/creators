@@ -1,7 +1,8 @@
 (() => {
   function accountDisplayName(user) {
     const metadata = user.user_metadata || {};
-    const candidate = metadata.username || metadata.full_name || metadata.name;
+    const candidate =
+      metadata.display_name || metadata.username || metadata.full_name || metadata.name;
 
     if (typeof candidate === "string" && candidate.trim()) {
       return candidate.trim();
@@ -45,6 +46,13 @@
     const signoutButton = document.querySelector("[data-account-signout]");
     const resetEmailButton = document.querySelector("[data-reset-email]");
     const resetEmailMessage = document.querySelector("[data-password-reset-message]");
+    const nameOpenButton = document.querySelector("[data-edit-name-open]");
+    const nameDialog = document.querySelector("[data-name-edit-dialog]");
+    const nameForm = document.querySelector("[data-name-edit-form]");
+    const nameInput = nameForm?.elements["display-name"];
+    const nameCancelButton = document.querySelector("[data-name-edit-cancel]");
+    const nameSaveButton = nameForm?.querySelector('button[type="submit"]');
+    const nameStatus = document.querySelector("[data-name-edit-status]");
     const deleteOpenButton = document.querySelector("[data-delete-account-open]");
     const deleteDialog = document.querySelector("[data-delete-account-dialog]");
     const deleteCheckbox = document.querySelector("[data-delete-account-checkbox]");
@@ -67,6 +75,25 @@
     let redirectStarted = false;
     let deletionCompleted = false;
     let deletionInProgress = false;
+    let nameUpdateInProgress = false;
+
+    function setNameStatus(message, state = "") {
+      if (!nameStatus) return;
+      nameStatus.textContent = message;
+      if (state) {
+        nameStatus.dataset.state = state;
+      } else {
+        delete nameStatus.dataset.state;
+      }
+    }
+
+    function resetNameDialog() {
+      nameUpdateInProgress = false;
+      if (nameInput) nameInput.disabled = false;
+      if (nameCancelButton) nameCancelButton.disabled = false;
+      if (nameSaveButton) nameSaveButton.disabled = false;
+      setNameStatus("");
+    }
 
     function setDeleteStatus(message, state = "") {
       if (!deleteStatus) return;
@@ -106,6 +133,7 @@
       if (shell) shell.hidden = false;
       if (signoutButton) signoutButton.disabled = false;
       if (resetEmailButton) resetEmailButton.disabled = !user.email;
+      if (nameOpenButton) nameOpenButton.disabled = false;
       if (deleteOpenButton) deleteOpenButton.disabled = false;
     }
 
@@ -176,6 +204,74 @@
           setStatus("The password reset email could not be sent. Please try again.", "error");
         } finally {
           resetEmailButton.disabled = false;
+        }
+      });
+    }
+
+    if (nameOpenButton && nameDialog && nameInput) {
+      nameOpenButton.addEventListener("click", () => {
+        resetNameDialog();
+        nameInput.value = accountDisplayName(user);
+        nameDialog.showModal();
+        nameInput.focus();
+        nameInput.select();
+      });
+
+      nameDialog.addEventListener("close", () => {
+        resetNameDialog();
+        nameForm?.reset();
+        nameOpenButton.focus();
+      });
+
+      nameDialog.addEventListener("cancel", (event) => {
+        if (nameUpdateInProgress) event.preventDefault();
+      });
+
+      nameDialog.addEventListener("click", (event) => {
+        if (!nameUpdateInProgress && event.target === nameDialog) nameDialog.close();
+      });
+    }
+
+    if (nameCancelButton && nameDialog) {
+      nameCancelButton.addEventListener("click", () => {
+        nameDialog.close();
+      });
+    }
+
+    if (nameForm && nameInput) {
+      nameForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        if (!nameForm.reportValidity()) return;
+
+        const displayName = nameInput.value.trim().replace(/\s+/g, " ");
+        if (!displayName || displayName.length > 80) {
+          setNameStatus("Enter a name between 1 and 80 characters.", "error");
+          return;
+        }
+
+        nameUpdateInProgress = true;
+        nameInput.disabled = true;
+        if (nameCancelButton) nameCancelButton.disabled = true;
+        if (nameSaveButton) nameSaveButton.disabled = true;
+        setNameStatus("Saving your name...");
+
+        try {
+          const { data: updateData, error: updateError } = await client.auth.updateUser({
+            data: { display_name: displayName }
+          });
+          if (updateError || !updateData.user) throw updateError || new Error("No user returned.");
+
+          user = updateData.user;
+          renderUser(user);
+          nameDialog.close();
+          setStatus("Your name has been updated.", "success");
+        } catch {
+          nameUpdateInProgress = false;
+          nameInput.disabled = false;
+          if (nameCancelButton) nameCancelButton.disabled = false;
+          if (nameSaveButton) nameSaveButton.disabled = false;
+          setNameStatus("Your name could not be updated. Please try again.", "error");
+          nameInput.focus();
         }
       });
     }
