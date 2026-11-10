@@ -323,6 +323,7 @@
 
     async function loadProfiles() {
       if (!user || !tableBody) return;
+      openButton.disabled = true;
       setMessage(listStatus, "");
 
       const { data, error } = await client
@@ -332,6 +333,10 @@
 
       if (error) {
         renderProfiles([]);
+        openButton.disabled = true;
+        openButton.textContent = ["42P01", "PGRST205"].includes(error.code)
+          ? "Create New Profile - Setup Pending"
+          : "Create New Profile";
         setMessage(
           listStatus,
           ["42P01", "PGRST205"].includes(error.code)
@@ -339,17 +344,20 @@
             : "Your creator profiles could not be loaded. Please refresh the page.",
           "error"
         );
-        return;
+        return false;
       }
 
       renderProfiles(data || []);
+      openButton.textContent = "Create New Profile";
+      openButton.disabled = false;
+      return true;
     }
 
     client.auth.onAuthStateChange((event, session) => {
       window.setTimeout(() => {
         if (session?.user) {
           user = session.user;
-          openButton.disabled = false;
+          loadProfiles();
         } else if (event === "SIGNED_OUT") {
           openButton.disabled = true;
         }
@@ -360,7 +368,6 @@
     if (sessionError || !sessionData.session?.user) return;
 
     user = sessionData.session.user;
-    openButton.disabled = false;
     await loadProfiles();
 
     openButton.addEventListener("click", () => {
