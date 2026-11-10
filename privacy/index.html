@@ -48,7 +48,7 @@
             <li><a href="#purposes">5. Purposes and legal bases</a></li>
             <li><a href="#access">6. Who can access information</a></li>
             <li><a href="#providers">7. Providers and infrastructure</a></li>
-            <li><a href="#google">8. Google sign in</a></li>
+            <li><a href="#google">8. Google and Discord sign in</a></li>
             <li><a href="#payments">9. Payments and subscriptions</a></li>
             <li><a href="#sharing">10. Sharing and public disclosure</a></li>
             <li><a href="#retention">11. Retention and deletion</a></li>
@@ -67,7 +67,7 @@
             <strong>Important platform status</strong>
             <p>
               Public sign-in and signup pages now provide email and password authentication through
-              Supabase Auth, together with Google OAuth. An authenticated dashboard and My account page
+              Supabase Auth, together with Google and Discord OAuth. An authenticated dashboard and My account page
               provide access to the signed-in user's own account details. Supabase authentication,
               backend services and session handling are operational. Creator page creation, creator
               profiles, subscriptions, payments, uploads, forums, verification, analytics and advertising
@@ -92,7 +92,7 @@
               <div class="info-card">
                 <span class="active-label">Operational</span>
                 <strong>Authentication and backend services</strong>
-                <p>Supabase authentication and backend services, Google OAuth, session handling, the authenticated dashboard and My account view are operational. Creator page creation remains under development.</p>
+                <p>Supabase authentication and backend services, Google OAuth, Discord OAuth, session handling, the authenticated dashboard and My account view are operational. Creator page creation remains under development.</p>
               </div>
               <div class="info-card">
                 <span class="active-label">Active now</span>
@@ -134,15 +134,16 @@
             <ul>
               <li>IP address and request details processed by GitHub Pages for hosting and security.</li>
               <li>IP address, browser type, browser version, referring domain, requested CDN URL, request time, device identifiers and diagnostic data processed when jsDelivr delivers the Supabase JavaScript library.</li>
-              <li>For registered or signed-in users, a username where supplied, Supabase user ID, Google provider identifier, email address, authentication events, session records and related security information.</li>
+              <li>For registered or signed-in users, a username where supplied, Supabase user ID, Google or Discord provider identifier, email address, authentication events, session records and related security information.</li>
               <li>Name and profile image may be received from Google where present in the ordinary sign-in response.</li>
+              <li>For Discord sign in, NovaX receives only the user's Discord identity and email address through the requested identity and email permissions.</li>
               <li>Information included in emails or other correspondence sent to NovaX.</li>
             </ul>
             <h3>Authentication information and planned account features</h3>
             <div class="info-grid">
               <div class="info-card">
                 <strong>Operational authentication information</strong>
-                <p>Username where supplied, email address, internal Supabase user ID, Google provider identifier, authentication events, session and security information for registered or signed-in users.</p>
+                <p>Username where supplied, email address, internal Supabase user ID, Google or Discord provider identifier, authentication events, session and security information for registered or signed-in users.</p>
               </div>
               <div class="info-card">
                 <strong>Planned public profile information</strong>
@@ -160,6 +161,7 @@
             <p>Additional categories may include:</p>
             <ul>
               <li>name and profile picture received from Google where present in the tested Google sign-in response;</li>
+              <li>Discord identity and email address received when a user chooses Discord sign in;</li>
               <li>posts, comments, announcements, reports and forum contributions;</li>
               <li>billing name, billing contact details, subscription history and payment references where paid services are launched;</li>
               <li>IP addresses, browser details, device data, sign in events and security logs;</li>
@@ -168,7 +170,7 @@
               <li>guardian contact, authority and consent records for eligible users aged 16 or 17 where required.</li>
             </ul>
             <p>
-              NovaX does not receive a user's Google password. Users must not send passwords, payment card
+              NovaX does not receive a user's Google or Discord password. Users must not send passwords, payment card
               details, identity documents or security codes by ordinary email unless NovaX provides a
               specifically identified secure process and explains why the information is required.
             </p>
@@ -181,7 +183,7 @@
             <ul>
               <li>directly from a person who emails or otherwise contacts NovaX;</li>
               <li>automatically through ordinary hosting and CDN network requests;</li>
-              <li>through the public signup and sign-in pages, including email and password authentication and the configured Google OAuth process;</li>
+              <li>through the public signup and sign-in pages, including email and password authentication and the configured Google and Discord OAuth processes;</li>
               <li>through the authenticated dashboard and My account page when a user views account details, changes a password or starts a data or deletion request;</li>
               <li>in the future, through creator page creation, profile editing, image uploads, posts, comments, support requests and additional account settings;</li>
               <li>in the future, from a payment provider, limited to transaction, billing and subscription information required to administer a purchase;</li>
@@ -338,7 +340,12 @@
               <div class="provider-card">
                 <span class="active-label">Operational for authentication</span>
                 <strong>Google</strong>
-                <p>Provides the OAuth method available from the public sign-in page. It does not request sensitive Google scopes. See the <a href="https://policies.google.com/privacy">Google Privacy Policy</a>.</p>
+                <p>Provides an OAuth method available from the public sign-in and signup pages. It does not request sensitive Google scopes. See the <a href="https://policies.google.com/privacy">Google Privacy Policy</a>.</p>
+              </div>
+              <div class="provider-card">
+                <span class="active-label">Operational for authentication</span>
+                <strong>Discord</strong>
+                <p>Provides an OAuth method available from the public sign-in and signup pages. NovaX requests only Discord identity and email permissions. See the <a href="https://discord.com/privacy">Discord Privacy Policy</a>.</p>
               </div>
             </div>
             <h3>Supabase processing</h3>
@@ -365,10 +372,12 @@
 
           <section class="legal-section" id="google">
             <span class="section-number">08</span>
-            <h2>Google sign in</h2>
+            <h2>Google and Discord sign in</h2>
+
+            <h3>Google</h3>
             <span class="active-label">Configured and successfully tested</span>
             <p>
-              Google OAuth is available from the public sign-in page. Google may provide a stable account
+              Google OAuth is available from the public sign-in and signup pages. Google may provide a stable account
               identifier, email address, email verification status, name and profile picture through the
               ordinary sign-in scopes shown on the consent screen. NovaX uses that information to create or link an authentication account and
               authenticate the user. No sensitive Google scopes are requested.
@@ -379,11 +388,24 @@
               Google service unless a separate feature genuinely needs it and the user is given a clear scope
               request and updated privacy information first.
             </p>
+
+            <h3>Discord</h3>
+            <span class="active-label">Available through Supabase OAuth</span>
             <p>
-              Supabase processes the resulting provider identity, tokens and session records for authentication.
-              Google remains responsible for its own processing under its privacy terms. Removing Google access
-              does not automatically delete information previously supplied to Creator Hub; a separate deletion
-              request may still be required.
+              Discord OAuth is available from the public sign-in and signup pages. NovaX requests only the
+              permissions needed to receive the user's Discord identity and email address. NovaX does not request
+              access to Discord servers, messages, connections, friends, activities, contacts, voice data or
+              other Discord account content.
+            </p>
+            <p>
+              Discord handles the user's Discord credentials. NovaX Creator Hub and Supabase do not receive the
+              user's Discord password. Supabase processes the provider identity, tokens and session records
+              required to complete authentication. NovaX does not use those tokens to access broader Discord data.
+            </p>
+            <p>
+              Google and Discord remain responsible for their own processing under their respective privacy
+              terms. Removing provider access does not automatically delete information previously supplied to
+              Creator Hub. A separate account deletion request may still be required.
             </p>
           </section>
 
@@ -411,7 +433,7 @@
             <p>Information may be disclosed:</p>
             <ul>
               <li>to GitHub Pages, jsDelivr and Supabase for the roles described above;</li>
-              <li>to Google and Supabase when an authorised user selects Google sign in;</li>
+              <li>to Google, Discord and Supabase when an authorised user selects the corresponding external sign-in option;</li>
               <li>to a confirmed payment provider if paid services launch;</li>
               <li>to support, security, moderation, professional adviser or verification providers where needed and contractually appropriate;</li>
               <li>to courts, regulators, law enforcement or other authorities where disclosure is required or lawfully requested;</li>

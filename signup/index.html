@@ -58,6 +58,19 @@
             <button class="auth-submit" type="submit" disabled>Create account</button>
           </form>
 
+          <div data-oauth-group>
+            <div class="auth-divider"><span>or</span></div>
+            <div class="oauth-options">
+              <button class="oauth-button" type="button" data-google-signin disabled>Sign in with Google</button>
+              <button class="oauth-button" type="button" data-discord-signin disabled>Sign in with Discord</button>
+            </div>
+            <p class="oauth-consent">
+              By continuing with Google or Discord, you confirm that you are at least 16 and agree to the
+              <a href="/terms/" target="_blank" rel="noopener noreferrer">Terms of Service</a> and
+              <a href="/privacy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
+            </p>
+          </div>
+
           <p class="auth-status" data-auth-status role="status" aria-live="polite"></p>
 
           <div class="auth-signed-in" data-signed-in hidden>

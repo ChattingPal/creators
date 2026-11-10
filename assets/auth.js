@@ -88,6 +88,7 @@
     const form = document.querySelector("[data-auth-form]");
     const status = document.querySelector("[data-auth-status]");
     const googleButton = document.querySelector("[data-google-signin]");
+    const discordButton = document.querySelector("[data-discord-signin]");
     const oauthGroup = document.querySelector("[data-oauth-group]");
     const signedInPanel = document.querySelector("[data-signed-in]");
     const signoutButton = document.querySelector("[data-signout]");
@@ -104,7 +105,12 @@
     }
 
     function setBusy(isBusy) {
-      const controls = [form?.querySelector('button[type="submit"]'), googleButton, signoutButton];
+      const controls = [
+        form?.querySelector('button[type="submit"]'),
+        googleButton,
+        discordButton,
+        signoutButton
+      ];
       controls.forEach((control) => {
         if (control) control.disabled = isBusy;
       });
@@ -124,11 +130,12 @@
     const submitButton = form.querySelector('button[type="submit"]');
     if (submitButton) submitButton.disabled = false;
     if (googleButton) googleButton.disabled = false;
+    if (discordButton) discordButton.disabled = false;
     if (signoutButton) signoutButton.disabled = false;
 
     const initialUrl = new URL(window.location.href);
     if (initialUrl.searchParams.has("error") || initialUrl.searchParams.has("error_description")) {
-      setStatus("Google sign in was not completed. Please try again.", "error");
+      setStatus("External sign in was not completed. Please try again.", "error");
       scrubAuthUrl();
     }
 
@@ -218,24 +225,34 @@
       }
     });
 
+    async function startOAuth(provider, providerName) {
+      setBusy(true);
+      setStatus(`Opening ${providerName} sign in...`);
+
+      try {
+        const { error } = await client.auth.signInWithOAuth({
+          provider,
+          options: {
+            redirectTo: oauthReturnUrl()
+          }
+        });
+
+        if (error) throw error;
+      } catch (error) {
+        setStatus(safeErrorMessage(error, "signin"), "error");
+        setBusy(false);
+      }
+    }
+
     if (googleButton) {
-      googleButton.addEventListener("click", async () => {
-        setBusy(true);
-        setStatus("Opening Google sign in...");
+      googleButton.addEventListener("click", () => {
+        startOAuth("google", "Google");
+      });
+    }
 
-        try {
-          const { error } = await client.auth.signInWithOAuth({
-            provider: "google",
-            options: {
-              redirectTo: oauthReturnUrl()
-            }
-          });
-
-          if (error) throw error;
-        } catch (error) {
-          setStatus(safeErrorMessage(error, "signin"), "error");
-          setBusy(false);
-        }
+    if (discordButton) {
+      discordButton.addEventListener("click", () => {
+        startOAuth("discord", "Discord");
       });
     }
 
