@@ -33,6 +33,6 @@ jobs:
           version: latest
 
       - name: Deploy authenticated deletion function
-        run: supabase functions deploy delete-account --project-ref deeegczehhbiofqhhizl
+        run: supabase functions deploy delete-account --remote=deeegczehhbiofqhhizl --yes
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
