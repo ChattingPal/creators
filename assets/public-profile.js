@@ -10,6 +10,7 @@
     const handleElement = document.querySelector("[data-public-handle]");
     const descriptionElement = document.querySelector("[data-public-description]");
     const statusElement = document.querySelector("[data-public-status]");
+    const verifiedBadge = document.querySelector("[data-public-verified-badge]");
     const avatarImage = document.querySelector("[data-public-avatar-image]");
     const avatarPlaceholder = document.querySelector("[data-public-avatar-placeholder]");
     const profileKey = new URL(window.location.href).searchParams.get("profile");
@@ -49,6 +50,9 @@
     }
     if (statusElement) {
       statusElement.textContent = profile.verified ? "Verified creator" : "Beta creator";
+    }
+    if (verifiedBadge) {
+      verifiedBadge.hidden = profile.verified !== true;
     }
 
     if (profile.avatar_path && avatarImage) {
