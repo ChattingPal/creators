@@ -8,7 +8,7 @@
     <meta name="description" content="Manage your NovaX Creator Hub pages.">
     <meta name="robots" content="noindex, nofollow">
     <link rel="canonical" href="https://creators.novaxstudios.art/dashboard/">
-    <link rel="stylesheet" href="/assets/styles.css">
+    <link rel="stylesheet" href="/assets/styles.css?v=20261111-edit1">
     <title>Dashboard | NovaX Creator Hub</title>
   </head>
   <body data-account-view="pages">
@@ -211,6 +211,63 @@
       </div>
     </dialog>
 
+    <dialog class="profile-edit-dialog" data-profile-edit-dialog aria-labelledby="profile-edit-title" aria-describedby="profile-edit-intro">
+      <form class="profile-edit-form" data-profile-edit-form action="/dashboard/" method="post">
+        <header class="profile-edit-header">
+          <div>
+            <p class="eyebrow">Creator profile</p>
+            <h2 id="profile-edit-title">Edit Profile</h2>
+          </div>
+          <button class="profile-edit-close" type="button" data-profile-edit-close aria-label="Close profile editor">Close</button>
+        </header>
+
+        <p class="profile-edit-intro" id="profile-edit-intro">Update the public information shown on this creator profile.</p>
+
+        <div class="profile-form-field">
+          <label for="profile-edit-handle">Handle</label>
+          <input id="profile-edit-handle" name="edit-handle" type="text" required minlength="3" maxlength="30" pattern="[A-Za-z0-9_]+" autocomplete="off" aria-describedby="profile-edit-handle-help profile-edit-handle-message">
+          <p id="profile-edit-handle-help">Use 3 to 30 letters, numbers or underscores.</p>
+          <p class="verified-handle-message" id="profile-edit-handle-message" data-verified-handle-message hidden>
+            Verified creators cannot manually change their handle. You must request a handle change by contacting the support team.
+          </p>
+          <p class="profile-field-error" data-profile-edit-handle-error aria-live="polite"></p>
+        </div>
+
+        <fieldset class="profile-picture-field profile-edit-picture-field">
+          <legend>Image</legend>
+          <div class="profile-picture-picker">
+            <div class="profile-picture-preview" data-profile-edit-avatar-preview aria-label="Current profile image preview">
+              <span data-profile-edit-avatar-placeholder aria-hidden="true">NX</span>
+              <img data-profile-edit-avatar-image alt="Profile image preview" width="96" height="96" hidden>
+            </div>
+            <div class="profile-picture-controls">
+              <label class="profile-file-button" for="profile-edit-avatar">Choose replacement</label>
+              <input id="profile-edit-avatar" name="edit-avatar" type="file" accept="image/jpeg,image/png,image/webp">
+              <button type="button" data-profile-edit-avatar-remove hidden>Remove image</button>
+              <p>JPEG, PNG or WebP. Maximum 5 MB.</p>
+            </div>
+          </div>
+          <p class="profile-field-error" data-profile-edit-avatar-error aria-live="polite"></p>
+        </fieldset>
+
+        <div class="profile-form-field">
+          <div class="profile-field-label-row">
+            <label for="profile-edit-description">Description</label>
+            <span data-profile-edit-description-count aria-live="polite">0 / 500</span>
+          </div>
+          <textarea id="profile-edit-description" name="edit-description" rows="6" maxlength="500" aria-describedby="profile-edit-description-help"></textarea>
+          <p id="profile-edit-description-help">Tell visitors about your work. This field is optional.</p>
+        </div>
+
+        <p class="profile-modal-status" data-profile-edit-status role="status" aria-live="polite"></p>
+
+        <div class="profile-edit-actions">
+          <button class="profile-secondary-button" type="button" data-profile-edit-cancel>Cancel</button>
+          <button class="profile-primary-button" type="submit" data-profile-edit-save>Save changes</button>
+        </div>
+      </form>
+    </dialog>
+
     <footer class="site-footer">
       <div class="footer-grid">
         <div class="footer-company">
@@ -230,6 +287,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0" defer></script>
     <script src="/assets/supabase-client.js?v=20261110-auth1" defer></script>
     <script src="/assets/account-area.js?v=20261110-profile1" defer></script>
-    <script src="/assets/creator-profiles.js?v=20261110-paths1" defer></script>
+    <script src="/assets/creator-profiles.js?v=20261111-edit1" defer></script>
+    <script src="/assets/profile-editor.js?v=20261111-edit1" defer></script>
   </body>
 </html>

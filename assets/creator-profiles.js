@@ -312,9 +312,17 @@
           )
         });
         const actionCell = createElement("td");
+        const actions = createElement("div", { className: "profile-table-actions" });
+        const editButton = createElement("button", {
+          className: "profile-table-edit",
+          text: "Edit"
+        });
+        editButton.type = "button";
+        editButton.dataset.profileEdit = profile.id;
         const viewLink = createElement("a", { className: "profile-table-action", text: "View" });
         viewLink.href = profileUrl(profile.handle);
-        actionCell.append(viewLink);
+        actions.append(editButton, viewLink);
+        actionCell.append(actions);
 
         row.append(handleCell, statusCell, createdCell, actionCell);
         tableBody.append(row);
@@ -352,6 +360,15 @@
       openButton.disabled = false;
       return true;
     }
+
+    window.addEventListener("novax:profile-updated", async () => {
+      await loadProfiles();
+      setMessage(listStatus, "Your creator profile has been updated.", "success");
+    });
+
+    window.addEventListener("novax:profile-edit-error", () => {
+      setMessage(listStatus, "That creator profile could not be opened for editing.", "error");
+    });
 
     client.auth.onAuthStateChange((event, session) => {
       window.setTimeout(() => {
