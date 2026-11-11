@@ -1826,6 +1826,60 @@ tr:last-child td {
   gap: 0.7rem;
 }
 
+.profile-danger-area {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.35rem;
+  padding: 1rem;
+  background: #fff7ed;
+  border: 1px solid #f2b8b5;
+  border-radius: 0.75rem;
+}
+
+.profile-danger-area p {
+  margin: 0;
+}
+
+.profile-danger-area p:last-child {
+  margin-top: 0.25rem;
+  color: #6b4d4d;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.profile-danger-label {
+  color: #991b1b;
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.profile-delete-open {
+  flex: 0 0 auto;
+  min-height: 2.7rem;
+  padding: 0.65rem 0.95rem;
+  color: #ffffff;
+  background: #b91c1c;
+  border: 1px solid #991b1b;
+  border-radius: 0.6rem;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.profile-delete-open:hover,
+.profile-delete-open:focus-visible {
+  background: #991b1b;
+}
+
+.profile-delete-open:disabled {
+  cursor: wait;
+  opacity: 0.62;
+}
+
 .profile-edit-close:disabled,
 .profile-edit-form button:disabled,
 .profile-edit-form textarea:disabled,
@@ -2559,6 +2613,15 @@ tr:last-child td {
   }
 
   .profile-edit-close {
+    width: 100%;
+  }
+
+  .profile-danger-area {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .profile-delete-open {
     width: 100%;
   }
 }

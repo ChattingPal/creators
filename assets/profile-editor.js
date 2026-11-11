@@ -27,6 +27,13 @@
     const descriptionInput = form?.elements["edit-description"];
     const descriptionCount = document.querySelector("[data-profile-edit-description-count]");
     const status = document.querySelector("[data-profile-edit-status]");
+    const deleteOpenButton = document.querySelector("[data-profile-delete-open]");
+    const deleteDialog = document.querySelector("[data-profile-delete-dialog]");
+    const deleteHandle = document.querySelector("[data-profile-delete-handle]");
+    const deleteCheckbox = document.querySelector("[data-profile-delete-checkbox]");
+    const deleteCancelButton = document.querySelector("[data-profile-delete-cancel]");
+    const deleteConfirmButton = document.querySelector("[data-profile-delete-confirm]");
+    const deleteStatus = document.querySelector("[data-profile-delete-status]");
 
     if (!client || !dialog || !form || !handleInput || !descriptionInput || !avatarInput) return;
 
@@ -37,6 +44,8 @@
     let removeAvatar = false;
     let previewUrl = "";
     let saving = false;
+    let deleteTarget = null;
+    let deletionInProgress = false;
 
     function setMessage(element, message, state = "") {
       if (!element) return;
@@ -100,6 +109,7 @@
       closeButton.disabled = isBusy;
       cancelButton.disabled = isBusy;
       saveButton.disabled = isBusy;
+      if (deleteOpenButton) deleteOpenButton.disabled = isBusy;
       descriptionInput.disabled = isBusy;
       avatarInput.disabled = isBusy;
       avatarRemoveButton.disabled = isBusy;
@@ -122,6 +132,17 @@
       setMessage(avatarError, "");
       setMessage(status, "");
       showAvatar(profile.avatar_path, profile.handle);
+    }
+
+    function resetDeleteDialog() {
+      deletionInProgress = false;
+      if (deleteCheckbox) {
+        deleteCheckbox.checked = false;
+        deleteCheckbox.disabled = false;
+      }
+      if (deleteCancelButton) deleteCancelButton.disabled = false;
+      if (deleteConfirmButton) deleteConfirmButton.disabled = true;
+      setMessage(deleteStatus, "");
     }
 
     async function loadOwnedProfile(profileId) {
@@ -235,6 +256,104 @@
       setMessage(avatarError, "");
       setAvatarPlaceholder(handleInput.value);
     });
+
+    if (
+      deleteOpenButton &&
+      deleteDialog &&
+      deleteCheckbox &&
+      deleteCancelButton &&
+      deleteConfirmButton
+    ) {
+      deleteOpenButton.addEventListener("click", () => {
+        if (!profile || saving || deletionInProgress) return;
+        deleteTarget = { ...profile };
+        resetDeleteDialog();
+        if (deleteHandle) deleteHandle.textContent = `@${profile.handle}`;
+        deleteDialog.showModal();
+        deleteCheckbox.focus();
+      });
+
+      deleteCheckbox.addEventListener("change", () => {
+        deleteConfirmButton.disabled = !deleteCheckbox.checked;
+      });
+
+      deleteCancelButton.addEventListener("click", () => {
+        if (!deletionInProgress) deleteDialog.close();
+      });
+
+      deleteDialog.addEventListener("cancel", (event) => {
+        if (deletionInProgress) event.preventDefault();
+      });
+
+      deleteDialog.addEventListener("click", (event) => {
+        if (!deletionInProgress && event.target === deleteDialog) deleteDialog.close();
+      });
+
+      deleteDialog.addEventListener("close", () => {
+        resetDeleteDialog();
+        deleteTarget = null;
+        if (dialog.open) deleteOpenButton.focus();
+      });
+
+      deleteConfirmButton.addEventListener("click", async () => {
+        if (!deleteCheckbox.checked || deletionInProgress || !deleteTarget) return;
+
+        const { data: sessionData, error: sessionError } = await client.auth.getSession();
+        const currentUser = sessionData.session?.user;
+        if (sessionError || !currentUser || currentUser.id !== user?.id) {
+          setMessage(deleteStatus, "Your session has expired. Sign in again before deleting this page.", "error");
+          return;
+        }
+
+        let authoritativeProfile;
+        try {
+          authoritativeProfile = await loadOwnedProfile(deleteTarget.id);
+        } catch {
+          setMessage(deleteStatus, "This creator page could not be verified. Refresh the dashboard and try again.", "error");
+          return;
+        }
+
+        deletionInProgress = true;
+        deleteCheckbox.disabled = true;
+        deleteCancelButton.disabled = true;
+        deleteConfirmButton.disabled = true;
+        setMessage(deleteStatus, "Deleting your creator page...");
+
+        try {
+          const { data: deletedProfile, error: deleteError } = await client
+            .from(TABLE_NAME)
+            .delete()
+            .eq("id", authoritativeProfile.id)
+            .eq("ownerid", currentUser.id)
+            .select("id, avatar_path")
+            .single();
+
+          if (deleteError || !deletedProfile) {
+            throw deleteError || new Error("No deleted profile returned.");
+          }
+
+          if (deletedProfile.avatar_path) {
+            await client.storage.from(BUCKET_NAME).remove([deletedProfile.avatar_path]);
+          }
+
+          window.dispatchEvent(
+            new CustomEvent("novax:profile-deleted", { detail: { id: deletedProfile.id } })
+          );
+          deleteDialog.close();
+          if (dialog.open) dialog.close();
+        } catch {
+          deletionInProgress = false;
+          deleteCheckbox.disabled = false;
+          deleteCancelButton.disabled = false;
+          deleteConfirmButton.disabled = !deleteCheckbox.checked;
+          setMessage(
+            deleteStatus,
+            "Your creator page could not be deleted. Please try again or contact support.",
+            "error"
+          );
+        }
+      });
+    }
 
     form.addEventListener("submit", async (event) => {
       event.preventDefault();

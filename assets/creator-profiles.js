@@ -366,6 +366,11 @@
       setMessage(listStatus, "Your creator profile has been updated.", "success");
     });
 
+    window.addEventListener("novax:profile-deleted", async () => {
+      await loadProfiles();
+      setMessage(listStatus, "Your creator page has been deleted.", "success");
+    });
+
     window.addEventListener("novax:profile-edit-error", () => {
       setMessage(listStatus, "That creator profile could not be opened for editing.", "error");
     });

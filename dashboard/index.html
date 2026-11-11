@@ -8,7 +8,7 @@
     <meta name="description" content="Manage your NovaX Creator Hub pages.">
     <meta name="robots" content="noindex, nofollow">
     <link rel="canonical" href="https://creators.novaxstudios.art/dashboard/">
-    <link rel="stylesheet" href="/assets/styles.css?v=20261111-edit1">
+    <link rel="stylesheet" href="/assets/styles.css?v=20261111-edit2">
     <title>Dashboard | NovaX Creator Hub</title>
   </head>
   <body data-account-view="pages">
@@ -265,7 +265,36 @@
           <button class="profile-secondary-button" type="button" data-profile-edit-cancel>Cancel</button>
           <button class="profile-primary-button" type="submit" data-profile-edit-save>Save changes</button>
         </div>
+
+        <section class="profile-danger-area" aria-labelledby="profile-danger-title">
+          <div>
+            <p class="profile-danger-label" id="profile-danger-title">DANGEROUS AREA</p>
+            <p>Delete this creator page and its uploaded profile image permanently.</p>
+          </div>
+          <button class="profile-delete-open" type="button" data-profile-delete-open>Delete Page</button>
+        </section>
       </form>
+    </dialog>
+
+    <dialog class="delete-account-dialog profile-delete-dialog" data-profile-delete-dialog aria-labelledby="profile-delete-title" aria-describedby="profile-delete-warning">
+      <div class="delete-account-dialog-content">
+        <p class="eyebrow">Creator page security</p>
+        <h2 id="profile-delete-title">Delete creator page?</h2>
+        <p class="delete-account-warning" id="profile-delete-warning">Deleting this creator page is permanent and irreversible.</p>
+        <p>This removes <strong data-profile-delete-handle>this creator page</strong> and its uploaded profile image. Your Creator Hub account and any other creator pages will remain active.</p>
+
+        <label class="delete-account-confirmation">
+          <input type="checkbox" data-profile-delete-checkbox>
+          <span>I understand that this action cannot be undone.</span>
+        </label>
+
+        <p class="delete-account-status" data-profile-delete-status role="status" aria-live="polite"></p>
+
+        <div class="delete-account-dialog-actions">
+          <button class="delete-account-cancel" type="button" data-profile-delete-cancel>Cancel</button>
+          <button class="delete-account-confirm" type="button" data-profile-delete-confirm disabled>Delete</button>
+        </div>
+      </div>
     </dialog>
 
     <footer class="site-footer">
@@ -287,7 +316,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0" defer></script>
     <script src="/assets/supabase-client.js?v=20261110-auth1" defer></script>
     <script src="/assets/account-area.js?v=20261110-profile1" defer></script>
-    <script src="/assets/creator-profiles.js?v=20261111-edit1" defer></script>
-    <script src="/assets/profile-editor.js?v=20261111-edit1" defer></script>
+    <script src="/assets/creator-profiles.js?v=20261111-edit2" defer></script>
+    <script src="/assets/profile-editor.js?v=20261111-edit2" defer></script>
   </body>
 </html>
